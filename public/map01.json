@@ -21,7 +21,6 @@
             19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19],
          "height":16,
          "id":1,
-         "locked":true,
          "name":"Background",
          "opacity":1,
          "type":"tilelayer",
@@ -32,45 +31,33 @@
         }, 
         {
          "draworder":"topdown",
-         "id":2,
-         "locked":true,
-         "name":"Start",
-         "objects":[
-                {
-                 "class":"",
-                 "height":64,
-                 "id":2,
-                 "name":"",
-                 "rotation":0,
-                 "visible":true,
-                 "width":64,
-                 "x":64,
-                 "y":0
-                }],
-         "opacity":1,
-         "type":"objectgroup",
-         "visible":true,
-         "x":0,
-         "y":0
-        }, 
-        {
-         "draworder":"topdown",
-         "id":3,
-         "locked":true,
+         "id":13,
          "name":"End",
          "objects":[
                 {
                  "class":"",
                  "height":64,
-                 "id":8,
+                 "id":16,
                  "name":"",
+                 "properties":[
+                        {
+                         "name":"EndPoint",
+                         "type":"string",
+                         "value":"200"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":64,
-                 "x":895,
-                 "y":960
+                 "x":900,
+                 "y":964
                 }],
          "opacity":1,
+         "properties":[
+                {
+                 "name":"EnemyEnd",
+                 "type":"string",
+                 "value":"400"
+                }],
          "type":"objectgroup",
          "visible":true,
          "x":0,
@@ -78,14 +65,13 @@
         }, 
         {
          "draworder":"topdown",
-         "id":4,
-         "locked":true,
-         "name":"Path",
+         "id":14,
+         "name":"Pathing",
          "objects":[
                 {
                  "class":"",
                  "height":0,
-                 "id":9,
+                 "id":19,
                  "name":"",
                  "polyline":[
                         {
@@ -93,23 +79,69 @@
                          "y":0
                         }, 
                         {
-                         "x":834,
-                         "y":996
+                         "x":832,
+                         "y":964
+                        }],
+                 "properties":[
+                        {
+                         "name":"EnemiesPath",
+                         "type":"string",
+                         "value":"300"
                         }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
-                 "x":94,
-                 "y":14
+                 "x":96,
+                 "y":32
                 }],
          "opacity":1,
+         "properties":[
+                {
+                 "name":"EnemyPathing",
+                 "type":"string",
+                 "value":"300"
+                }],
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":15,
+         "name":"Start",
+         "objects":[
+                {
+                 "class":"",
+                 "height":64,
+                 "id":22,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"StartPoint",
+                         "type":"string",
+                         "value":"200"
+                        }],
+                 "rotation":0,
+                 "visible":true,
+                 "width":64,
+                 "x":66,
+                 "y":18
+                }],
+         "opacity":1,
+         "properties":[
+                {
+                 "name":"EnemyStart",
+                 "type":"string",
+                 "value":"200"
+                }],
          "type":"objectgroup",
          "visible":true,
          "x":0,
          "y":0
         }],
- "nextlayerid":5,
- "nextobjectid":10,
+ "nextlayerid":16,
+ "nextobjectid":23,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.9.2",
@@ -125,6 +157,32 @@
          "name":"Grass_Tileset",
          "spacing":0,
          "tilecount":256,
+         "tileheight":64,
+         "tilewidth":64
+        }, 
+        {
+         "columns":8,
+         "firstgid":257,
+         "image":"Tower Defense\/Foozle_2DC0028_Spire_EnemyPack_2_Ground\/Foozle_2DC0028_Spire_EnemyPack_2_Ground\/Ground\/Spritesheets\/Scorpion.png",
+         "imageheight":576,
+         "imagewidth":512,
+         "margin":0,
+         "name":"Scorpion",
+         "spacing":0,
+         "tilecount":72,
+         "tileheight":64,
+         "tilewidth":64
+        }, 
+        {
+         "columns":10,
+         "firstgid":329,
+         "image":"Tower Defense\/Foozle_2DC0028_Spire_EnemyPack_2_Ground\/Foozle_2DC0028_Spire_EnemyPack_2_Ground\/Ground\/Spritesheets\/Magma Crab.png",
+         "imageheight":576,
+         "imagewidth":640,
+         "margin":0,
+         "name":"MagmaCrab",
+         "spacing":0,
+         "tilecount":90,
          "tileheight":64,
          "tilewidth":64
         }],

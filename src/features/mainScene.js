@@ -4,6 +4,8 @@ const width = 1024;
 const height = 1024;
 
 const config = {
+  width,
+  height,
   type: Phaser.AUTO,
   backgroundColor: '#4488aa',
   scene: { preload, create },
@@ -12,12 +14,14 @@ const config = {
 const game = new Phaser.Game(config);
 
 function preload() {
+  this.load.tilemapTiledJSON('map', 'map01.json');
+  this.load.image('tiles','Grass_Tileset.png');
   this.load.image("play_button", "play_button.png");
   this.load.image("gold", "gold.png");
-  //this.load.image('tiles', 'public\Grass_Tileset.png');
-  //this.load.tilemapTiledJSON('tilemap', 'src\map01.json');
+  this.load.atlas('scorpion', 'Scorpion.png', 'Scorpion.json');
   
 }
+
 
 //Gold bar on hud
 var gold = 100
@@ -32,7 +36,12 @@ var levelText
 var lives = 50
 var livesText
 
-
+//Enemies
+const enemy = {
+  health: 100,
+  speed: 5,
+  reward: 10,
+};
 
 function create() {
   const centerX = width / 2;
@@ -44,25 +53,52 @@ function create() {
 
     playButton.on("pointerdown", () => {
     alert("clicked button");
+  
   });
 
+  playButton.setDepth(1);
+
+  //background of game
+  const map = this.make.tilemap({key:'map'});
+  const tileset = map.addTilesetImage("Grass_Tileset", 'tiles');
+  const layer = map.createLayer('Background', tileset);
+
+  //const map = new Tilemap (this,)
+
+  //Object layer in tiled called Start
+  const objectLayer = map.getObjectLayer('Start');
+  const scorpionSpawnObject = objectLayer.objects.find(object => object.properties.find(prop => prop.name === 'StartPoint').value === '200');
+
+  this.anims.create({ key: 'moving', frames: this.anims.generateFrameNames('scorpion', {prefix: 'Walk', end: 7, zeroPad:3}), repeat: -1});
+  this.anims.create({ key: 'up', frames: this.anims.generateFrameNames('scorpion', {prefix: 'U', end: 7, zeroPad: 3}), repeat: -1});
+  this.anims.create({ key: 'down', frames: this.anims.generateFrameNames('scorpion', {prefix: 'D', end: 7, zeroPad: 3}), repeat: -1});
+  
+  const scorpion = this.add.sprite(scorpionSpawnObject.x, scorpionSpawnObject.y, 'scorpion').play('down');
+
+  //Use these to see if it is working or getting x and y
+  console.log("scorpionSpawnObject.x = " + scorpionSpawnObject.x);
+  console.log("scorpionSpawnObject.y = " + scorpionSpawnObject.y);
+  console.log(objectLayer);
+
   goldImage = this.add.image(30, 25, 'gold');
-  goldImage = this.add.text(65, 15, '0', { fontSize: '32px', fill: '#000', });
+  goldImage = this.add.text(65, 15, '=0', { fontSize: '32px', fill: '#000', });
   //Maybe change fontFamily later
 
   levelText = this.add.text(425, 15, 'Level:1/5', { fontSize: '32px', fill: '#000',});
 
   livesText = this.add.text(812, 15, 'Lives:50', { fontSize: '32px', fill: '#000',});
 
+  
 }
 
-//Towers
-//var arrowTower = {
-  //level: 1, damage: 0, range: 0, upgradeCost: 0,
-//Enemies
-//var enemy  = {
- // x= 0, y= 0,health: 0, speed: 0, reward: 0, 
-//var airEnemy = {
-  //x= 0, y= 0,health: 0, speed: 0, reward: 0, 
- // this.load.spritesheet('arrowTower', "public\Towers\Arrow Tower\Tower 01.png", {frameWidth: 64, framHeight:  128 })
-  //maybe go look at different way to do spriteshee
+function update ()
+{
+
+}
+
+//Object layer of map (spawn, path, and end)
+//map.getObjectLayer('Start').objects.forEach(startObject => {
+  //const scorpion = startObject.properties.scorpion;
+  //const startX = startObject.x;
+  //const startY = startObject.y;
+//})
