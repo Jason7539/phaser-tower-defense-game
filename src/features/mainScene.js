@@ -66,8 +66,10 @@ function create() {
   //const map = new Tilemap (this,)
 
   //Object layer in tiled called Start
-  const objectLayer = map.getObjectLayer('Start');
-  const scorpionSpawnObject = objectLayer.objects.find(object => object.properties.find(prop => prop.name === 'StartPoint').value === '200');
+  const startPointLayer = map.getObjectLayer('Start');
+  const endPointLayer = map.getObjectLayer('End')
+  const scorpionSpawnObject = startPointLayer.objects.find(object => object.properties.find(prop => prop.name === 'StartPoint').value === '200');
+  const endPointObject = endPointLayer.objects.find(object => object.properties.find(prop => prop.name === 'EndPoint').value === '200')
 
   this.anims.create({ key: 'moving', frames: this.anims.generateFrameNames('scorpion', {prefix: 'Walk', end: 7, zeroPad:3}), repeat: -1});
   this.anims.create({ key: 'up', frames: this.anims.generateFrameNames('scorpion', {prefix: 'U', end: 7, zeroPad: 3}), repeat: -1});
@@ -78,7 +80,7 @@ function create() {
   //Use these to see if it is working or getting x and y
   console.log("scorpionSpawnObject.x = " + scorpionSpawnObject.x);
   console.log("scorpionSpawnObject.y = " + scorpionSpawnObject.y);
-  console.log(objectLayer);
+  console.log(startPointLayer);
 
   goldImage = this.add.image(30, 25, 'gold');
   goldImage = this.add.text(65, 15, '=0', { fontSize: '32px', fill: '#000', });
@@ -95,10 +97,3 @@ function update ()
 {
 
 }
-
-//Object layer of map (spawn, path, and end)
-//map.getObjectLayer('Start').objects.forEach(startObject => {
-  //const scorpion = startObject.properties.scorpion;
-  //const startX = startObject.x;
-  //const startY = startObject.y;
-//})
