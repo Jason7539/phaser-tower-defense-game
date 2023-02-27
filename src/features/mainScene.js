@@ -37,11 +37,11 @@ var lives = 50
 var livesText
 
 //Enemies
-const enemy = {
-  health: 100,
-  speed: 5,
-  reward: 10,
-};
+//const enemy = {
+  //health: 100,
+  //speed: 5,
+  //reward: 10,
+//};
 
 function create() {
   const centerX = width / 2;
@@ -63,31 +63,45 @@ function create() {
   const tileset = map.addTilesetImage("Grass_Tileset", 'tiles');
   const layer = map.createLayer('Background', tileset);
 
-  //const map = new Tilemap (this,)
-
   //Object layer in tiled called Start
   const startPointLayer = map.getObjectLayer('Start');
-  const endPointLayer = map.getObjectLayer('End')
-  const scorpionSpawnObject = startPointLayer.objects.find(object => object.properties.find(prop => prop.name === 'StartPoint').value === '200');
-  const endPointObject = endPointLayer.objects.find(object => object.properties.find(prop => prop.name === 'EndPoint').value === '200')
+  //Object layer in tiled called End
+  const endPointLayer = map.getObjectLayer('End');
 
+  //This is to get x and y for enemies pathing (maybe change startPointObject name)
+  const startPointObject = startPointLayer.objects.find(object => object.properties.find(prop => prop.name === 'StartPoint').value === '200');
+  const endPointObject = endPointLayer.objects.find(object => object.properties.find(prop => prop.name === 'EndPoint').value === '200');
+
+  //Pathing
+  const path = new Phaser.Curves.Path();
+  path.moveTo(startPointObject.x, startPointObject.y);
+  path.lineTo(endPointObject.x, endPointObject.y);
+
+  //Animations
   this.anims.create({ key: 'moving', frames: this.anims.generateFrameNames('scorpion', {prefix: 'Walk', end: 7, zeroPad:3}), repeat: -1});
   this.anims.create({ key: 'up', frames: this.anims.generateFrameNames('scorpion', {prefix: 'U', end: 7, zeroPad: 3}), repeat: -1});
   this.anims.create({ key: 'down', frames: this.anims.generateFrameNames('scorpion', {prefix: 'D', end: 7, zeroPad: 3}), repeat: -1});
   
-  const scorpion = this.add.sprite(scorpionSpawnObject.x, scorpionSpawnObject.y, 'scorpion').play('down');
+  //Sprite or animation for pathing
+  const groundScorpion = this.add.sprite(startPointObject.x, startPointObject.y, 'scorpion');
+  const follower = this.add.follower(path, 0, 0, 'scorpion');
+  follower.startFollow({
+    duration: 10000,
+    ease: 'Sine.easeInOut',
+    rotateToPath: true,
+    verticalAdjust: true,
+  });
 
   //Use these to see if it is working or getting x and y
-  console.log("scorpionSpawnObject.x = " + scorpionSpawnObject.x);
-  console.log("scorpionSpawnObject.y = " + scorpionSpawnObject.y);
+  console.log("startPointObject.x = " + startPointObject.x);
+  console.log("startPointObject.y = " + startPointObject.y);
   console.log(startPointLayer);
 
   goldImage = this.add.image(30, 25, 'gold');
   goldImage = this.add.text(65, 15, '=0', { fontSize: '32px', fill: '#000', });
+  
   //Maybe change fontFamily later
-
   levelText = this.add.text(425, 15, 'Level:1/5', { fontSize: '32px', fill: '#000',});
-
   livesText = this.add.text(812, 15, 'Lives:50', { fontSize: '32px', fill: '#000',});
 
   
