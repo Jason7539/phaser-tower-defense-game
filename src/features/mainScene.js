@@ -75,17 +75,15 @@ function create() {
   this.anims.create({ key: 'down', frames: this.anims.generateFrameNames('scorpion', { prefix: 'D', end: 7, zeroPad: 3 }), repeat: -1 });
 
   //Sprite or animation for pathing
-  const groundScorpion = this.add.sprite(startPointObject.x, startPointObject.y, 'scorpion').play('moving_left')
   const follower = this.add.follower(path, startPointObject.x, startPointObject.y, 'scorpion');
   follower.startFollow({
     duration: 10000,
-    ease: 'Sine.easeInOut',
-    rotateToPath: false,
-    verticalAdjust: true,
+    ease: 'Linear',
     anims: this.anims,
-    animsKey: 'down',
   });
 
+  //Use to see sprite
+  //const groundScorpion = this.add.sprite(startPointObject.x, startPointObject.y, 'scorpion').play('moving_left')
   //Use to see if follower in path is working correctly
   //follower.play('moving_left');
 
@@ -131,3 +129,7 @@ function create() {
 
 
 }
+
+
+
+
