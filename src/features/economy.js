@@ -10,7 +10,7 @@ class Economy {
   addMoney(amount) {
     this.totalMoney = this.totalMoney + amount;
   }
-  subtract(amount) {
+  subtractMoney(amount) {
     this.totalMoney = this.totalMoney - amount;
   }
 }

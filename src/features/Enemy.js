@@ -1,7 +1,7 @@
 const e = require("express");
 
 class Enemy {
-  constructor(type, /*armor,*/ healthAmount, speed, reward, lifeDamage, x, y) {
+  constructor(type, healthAmount, speed, reward, lifeDamage, x, y) {
     this.type = type;
     this.healthAmount = healthAmount;
     this.speed = speed;
