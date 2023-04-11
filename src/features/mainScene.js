@@ -23,9 +23,6 @@ function preload() {
   this.load.atlas("scorpion", "Scorpion.png", "Scorpion.json");
 }
 
-//Gold bar on hud
-var gold = 100;
-var goldImage;
 
 //Level needs to change when all enemies are dead
 var level = 1;
@@ -36,6 +33,7 @@ var livesText;
 
 function create() {
   let econ = new Economy(0, this, "gold");
+  
 
   const centerX = width / 2;
   const centerY = height / 2;
@@ -162,6 +160,11 @@ function create() {
 
   // TODO: call when we create economy. don't reliant on call order.( bring the level of goldImage and gold text to the top of scene)
   econ.render();
+  
+  econ.addMoney(150);
+  econ.subtractMoney(30);
+  
+  
 
   //Maybe change fontFamily later
   levelText = this.add.text(425, 15, "Level:1/5", {

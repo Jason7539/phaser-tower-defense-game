@@ -5,7 +5,7 @@ export default class Economy {
   totalMoney;
   currentScene;
   goldName;
-  goldText;
+  moneyText;
 
   constructor(startingMoney, scene, goldName) {
     this.totalMoney = startingMoney;
@@ -14,20 +14,22 @@ export default class Economy {
   }
 
   render() {
-    // TODO: add paramters to bring this to the front
     this.currentScene.add.image(30, 25, this.goldName);
-    this.currentScene.add.text(65, 15, `=${this.totalMoney}`, {
+    this.moneyText = this.currentScene.add.text(65, 15, `=${this.totalMoney}`, {
       fontSize: "32px",
       fill: "#000",
-    });
+    }); 
   }
 
-  // designing methods
   addMoney(amount) {
     this.totalMoney = this.totalMoney + amount;
-    this.render();
+    this.moneyText.setText(`=${this.totalMoney}`);
   }
+
   subtractMoney(amount) {
     this.totalMoney = this.totalMoney - amount;
+    this.moneyText.setText(`=${this.totalMoney}`);
   }
 }
+
+//this in let econ is the currentScene (variable) = scene
