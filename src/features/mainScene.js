@@ -1,6 +1,7 @@
 // This is the entry point of your game.
 
 import Economy from "./economy.js";
+import Enemy from "./Enemy.js";
 
 const width = 1024;
 const height = 1024;
@@ -33,6 +34,7 @@ var livesText;
 
 function create() {
   let econ = new Economy(0, this, "gold");
+  let scorpionMob = new Enemy(ground, 100, 5, 5, 1, this, x, y);
   
 
   const centerX = width / 2;
@@ -48,14 +50,13 @@ function create() {
 
   playButton.setDepth(1);
 
-  //background of game
+  //Background of game
   const map = this.make.tilemap({ key: "map" });
   const tileset = map.addTilesetImage("Grass_Tileset", "tiles");
   const layer = map.createLayer("Background", tileset);
 
-  //Object layer in tiled called Start
+  //Object layers in tiled called Start and End
   const startPointLayer = map.getObjectLayer("Start");
-  //Object layer in tiled called End
   const endPointLayer = map.getObjectLayer("End");
 
   //This is to get x and y for enemies pathing (maybe change startPointObject name)
@@ -75,7 +76,7 @@ function create() {
   path.lineTo(endPointObject.x, endPointObject.y);
   const startPoint = new Phaser.Math.Vector2(
     startPointObject.x,
-    startPointObject.y
+    startPointObject.y,
   );
   const endPoint = new Phaser.Math.Vector2(endPointObject.x, endPointObject.y);
 

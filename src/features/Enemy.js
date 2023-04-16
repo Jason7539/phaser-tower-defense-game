@@ -1,6 +1,6 @@
 const e = require("express");
 
-class Enemy {
+export default class Enemy {
   constructor(type, healthAmount, speed, reward, lifeDamage, x, y) {
     this.type = type;
     this.healthAmount = healthAmount;
@@ -31,9 +31,9 @@ class Enemy {
     const distance = Math.sqrt(dx*dx + dy*dy)
     return distance;
   }
+
+
 }
 
 const scorpion = new Enemy(ground, 100, 10, 10, 1);
 const flyingBug = new Enemy(air, 100, 10, 10, 1);
-
-module.exports = Enemy;
