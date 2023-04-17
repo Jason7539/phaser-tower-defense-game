@@ -11,7 +11,7 @@ export default class Pathing {
 
     //Line 59 - 81 from mainScene
     startPoint() {
-        const startPointObject = startPointLayer.objects.find(
+        const startPointObject = this.startPointLayer.objects.find(
             (object) =>
               object.properties.find((prop) => prop.name === "StartPoint").value ===
               "200"
@@ -19,7 +19,7 @@ export default class Pathing {
     }
 
     endPoint() {
-        const endPointObject = endPointLayer.objects.find(
+        const endPointObject = this.endPointLayer.objects.find(
             (object) =>
               object.properties.find((prop) => prop.name === "EndPoint").value === "200"
           );
