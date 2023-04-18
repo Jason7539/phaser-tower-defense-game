@@ -51,6 +51,7 @@ export default class Enemy {
       (object) =>
         object.properties.find((prop) => prop.name === "StartPoint").value === "200"
     );
+    return startPointObject;
   }
 
   endPoint() {
@@ -58,6 +59,17 @@ export default class Enemy {
       (object) =>
         object.properties.find((prop) => prop.name === "EndPoint").value === "200"
     );
+    return endPointObject;
+  }
+
+  getPath() {
+    const path = new Phaser.Curves.Path();
+    const startPointObject = this.startPoint();
+    const endPointObject = this.endPoint();
+    path.moveTo(startPointObject.x, startPointObject.y);
+    path.lineTo(endPointObject.x, endPointObject.y);
+    this.startPoint = new Phaser.Math.Vector2(startPointObject.x, startPointObject.y);
+    this.endPoint = new Phaser.Math.Vector2(endPointObject.x, endPointObject.y);
   }
 
   //Just added
@@ -91,6 +103,7 @@ export default class Enemy {
     });
   }
 
+  
 }
 
 const flyingBug = new Enemy(air, 100, 10, 10, 1);
@@ -101,4 +114,5 @@ const flyingBug = new Enemy(air, 100, 10, 10, 1);
 Can my method name be the same as a const?
 How do i know if i used const and this correctly?
 startPointLayer = map.getObjectLayer("Start")
-Whenever i git commit should i push?*/
+Whenever i git commit should i push?
+*/
