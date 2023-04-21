@@ -1,7 +1,6 @@
 // This is the entry point of your game.
 
 import Economy from "./economy.js";
-import Enemy from "./Enemy.js";
 
 const width = 1024;
 const height = 1024;
@@ -34,7 +33,7 @@ var livesText;
 
 function create() {
   let econ = new Economy(0, this, "gold");
-  let scorpionMob = new Enemy(ground, 100, 5, 5, 1, this, x, y);
+  //let scorpionMob = new Enemy(ground, 100, 5, 5, 1, this, x, y);
   
 
   const centerX = width / 2;
@@ -151,7 +150,7 @@ function create() {
         follower.anims.play("up", true);
         follower.setFlipX(false);
       }
-    },
+    }
   });
 
   //Use these to see if it is working or getting x and y
