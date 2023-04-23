@@ -6,27 +6,26 @@ export default class Enemy {
   speed;
   reward;
   lifeDamage;
-  scence;
+  scene;
   x;
   y;
   startPointLayer;
   endPointLayer;
 
-  constructor(type, healthAmount, speed, reward, lifeDamage, scene, x, y) {
+  constructor(type, healthAmount, speed, reward, lifeDamage, scene,) {
     this.type = type;
     this.healthAmount = healthAmount;
     this.speed = speed;
     this.reward = reward;
     this.lifeDamage = lifeDamage;
-    this.scence = scene;
-    this.x = x;
-    this.y = y;
+    this.scene = scene;
     this.startPointLayer = map.getObjectLayer("Start");
     this.endPointLayer = map.getObjectLayer("End");
   }
 
   takeDamage(damage) {
     this.healthAmount -= damage
+    
   }
   
   getReward(){
@@ -46,7 +45,7 @@ export default class Enemy {
     return distance;
   }
 
-  startPoint() {
+  getStartPoint() {
     const startPointObject = this.startPointLayer.objects.find(
       (object) =>
         object.properties.find((prop) => prop.name === "StartPoint").value === "200"
@@ -54,7 +53,7 @@ export default class Enemy {
     return startPointObject;
   }
 
-  endPoint() {
+  getEndPoint() {
     const endPointObject = this.endPointLayer.objects.find(
       (object) =>
         object.properties.find((prop) => prop.name === "EndPoint").value === "200"
@@ -64,8 +63,8 @@ export default class Enemy {
 
   getPath() {
     const path = new Phaser.Curves.Path();
-    const startPointObject = this.startPoint();
-    const endPointObject = this.endPoint();
+    const startPointObject = this.getStartPoint();
+    const endPointObject = this.getEndPoint();
     path.moveTo(startPointObject.x, startPointObject.y);
     path.lineTo(endPointObject.x, endPointObject.y);
     const startPoint = new Phaser.Math.Vector2(startPointObject.x, startPointObject.y,);
@@ -106,7 +105,7 @@ export default class Enemy {
 
   enemySpawn() {
     const animation = this.getAnimation();
-    const startPointObject = this.startPoint();
+    const startPointObject = this.getStartPoint();
     const { path, startPoint, endPoint } = this.getPath();
 
     //ask about path or using this.get
@@ -145,7 +144,6 @@ export default class Enemy {
   }
 }
 
-const flyingBug = new Enemy(air, 100, 10, 10, 1);
 
 
 

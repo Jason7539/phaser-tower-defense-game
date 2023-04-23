@@ -1,6 +1,7 @@
 // This is the entry point of your game.
 
 import Economy from "./economy.js";
+//import Enemy from "./Enemy.js";
 
 const width = 1024;
 const height = 1024;
@@ -54,7 +55,7 @@ function create() {
   const tileset = map.addTilesetImage("Grass_Tileset", "tiles");
   const layer = map.createLayer("Background", tileset);
 
-  //Object layers in tiled called Start and End
+ //Object layers in tiled called Start and End
   const startPointLayer = map.getObjectLayer("Start");
   const endPointLayer = map.getObjectLayer("End");
 
@@ -151,7 +152,7 @@ function create() {
         follower.setFlipX(false);
       }
     }
-  });
+  }); 
 
   //Use these to see if it is working or getting x and y
   console.log("startPointObject.x = " + startPointObject.x);
@@ -163,6 +164,7 @@ function create() {
   
   econ.addMoney(150);
   econ.subtractMoney(30);
+  
   
   
 
