@@ -1,4 +1,6 @@
-class Tower {
+import Enemy from "./Enemy.js";
+
+export default class Tower {
     constructor(damage, range, attackSpeed, targeting, cost, upgradeCost, maxLevel, x, y) {
         this.damage = damage;
         this.range = range;

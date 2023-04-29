@@ -1,3 +1,5 @@
+import Tower from "./tower";
+
 const e = require("express");
 
 export default class Enemy {
@@ -6,21 +8,25 @@ export default class Enemy {
   speed;
   reward;
   lifeDamage;
-  scene;
-  x;
-  y;
+  currentScene;
   startPointLayer;
   endPointLayer;
 
-  constructor(type, healthAmount, speed, reward, lifeDamage, scene,) {
+  constructor(type, healthAmount, speed, reward, lifeDamage, scene, load,) {
     this.type = type;
     this.healthAmount = healthAmount;
     this.speed = speed;
     this.reward = reward;
     this.lifeDamage = lifeDamage;
-    this.scene = scene;
+    this.currentScene = scene;
     this.startPointLayer = map.getObjectLayer("Start");
     this.endPointLayer = map.getObjectLayer("End");
+    this.load = load;
+    /*if (type === "ground") {
+      this.collider = scene.physics.add.collider(this.sprite, Tower, null, null, this);
+    } else if (type ==='air') {
+      this.sprite.setIgnoreGravity(true);
+    }*/
   }
 
   takeDamage(damage) {
@@ -38,15 +44,8 @@ export default class Enemy {
      lives -= this.lifeDamage
   }
 
-  getDistanceToTarget(tower) {
-    const dx = this.x - tower.x;
-    const dy = this.y - tower.y;
-    const distance = Math.sqrt(dx*dx + dy*dy)
-    return distance;
-  }
-
   getStartPoint() {
-    const startPointObject = this.startPointLayer.objects.find(
+    const startPointObject = this.currentScene.startPointLayer.objects.find(
       (object) =>
         object.properties.find((prop) => prop.name === "StartPoint").value === "200"
     );
@@ -54,7 +53,7 @@ export default class Enemy {
   }
 
   getEndPoint() {
-    const endPointObject = this.endPointLayer.objects.find(
+    const endPointObject = this.currentScene.endPointLayer.objects.find(
       (object) =>
         object.properties.find((prop) => prop.name === "EndPoint").value === "200"
     );
@@ -62,7 +61,7 @@ export default class Enemy {
   }
 
   getPath() {
-    const path = new Phaser.Curves.Path();
+    const path = new Phaser.Curves.Path(this.currentScene);
     const startPointObject = this.getStartPoint();
     const endPointObject = this.getEndPoint();
     path.moveTo(startPointObject.x, startPointObject.y);
@@ -74,27 +73,28 @@ export default class Enemy {
 
   //Just added
   animation() {
-    this.anims.create({
+    this.load.atlas("scorpion", "Scorpion.png", "Scorpion.json");
+    this.currentScene.anims.create({
       key: "moving_left",
-      frames: this.anims.generateFrameNames("scorpion", {
+      frames: this.currentScene.anims.generateFrameNames("scorpion", {
         prefix: "Walk",
         end: 7,
         zeroPad: 3,
       }),
       repeat: -1,
     });
-    this.anims.create({
+    this.currentScene.anims.create({
       key: "up",
-      frames: this.anims.generateFrameNames("scorpion", {
+      frames: this.currentScene.anims.generateFrameNames("scorpion", {
         prefix: "U",
         end: 7,
         zeroPad: 3,
       }),
       repeat: -1,
     });
-    this.anims.create({
+    this.currentScene.anims.create({
       key: "down",
-      frames: this.anims.generateFrameNames("scorpion", {
+      frames: this.currentScene.anims.generateFrameNames("scorpion", {
         prefix: "D",
         end: 7,
         zeroPad: 3,
@@ -109,14 +109,14 @@ export default class Enemy {
     const { path, startPoint, endPoint } = this.getPath();
 
     //ask about path or using this.get
-    const follower = this.add.follower(path, startPointObject.x, startPointObject.y, animation);
+    const follower = this.currentScene.add.follower(path, startPointObject.x, startPointObject.y, animation);
     follower.startFollow({
       duration: 10000,
       ease: "Linear",
-      anims: this.anims,
+      anims: this.currentScene.anims,
     });
 
-    this.time.addEvent({
+    this.currentScene.time.addEvent({
       delay: 5,
       loop: true,
       callback: () => {
@@ -142,8 +142,15 @@ export default class Enemy {
       }
     });
   }
-}
 
+  /*getDistanceToTarget(tower) {
+    const startPointObject = this.getStartPoint();
+    const dx = startPointObject.x - tower.x;
+    const dy = startPointObject.y - tower.y;
+    const distance = Math.sqrt(dx*dx + dy*dy)
+    return distance;
+  }*/
+}
 
 
 

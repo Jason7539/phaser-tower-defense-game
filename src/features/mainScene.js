@@ -2,6 +2,7 @@
 
 import Economy from "./economy.js";
 //import Enemy from "./Enemy.js";
+//import Tower from "./tower.js";
 
 const width = 1024;
 const height = 1024;
@@ -34,7 +35,7 @@ var livesText;
 
 function create() {
   let econ = new Economy(0, this, "gold");
-  //let scorpionMob = new Enemy(ground, 100, 5, 5, 1, this, x, y);
+  //let scorpionMob = new Enemy(ground, 100, 5, 5, 1, this);
   
 
   const centerX = width / 2;
@@ -55,12 +56,12 @@ function create() {
   const tileset = map.addTilesetImage("Grass_Tileset", "tiles");
   const layer = map.createLayer("Background", tileset);
 
- //Object layers in tiled called Start and End
+  //Object layers in tiled called Start and End
   const startPointLayer = map.getObjectLayer("Start");
   const endPointLayer = map.getObjectLayer("End");
 
-  //This is to get x and y for enemies pathing (maybe change startPointObject name)
-  const startPointObject = startPointLayer.objects.find(
+ //This is to get x and y for enemies pathing (maybe change startPointObject name)
+ const startPointObject = startPointLayer.objects.find(
     (object) =>
       object.properties.find((prop) => prop.name === "StartPoint").value ===
       "200"
@@ -122,10 +123,10 @@ function create() {
     anims: this.anims,
   });
 
-  //Use to see sprite
-  //const groundScorpion = this.add.sprite(startPointObject.x, startPointObject.y, 'scorpion').play('moving_left')
-  //Use to see if follower in path is working correctly
-  //follower.play('moving_left');
+  /*Use to see sprite
+  const groundScorpion = this.add.sprite(startPointObject.x, startPointObject.y, 'scorpion').play('moving_left')
+  Use to see if follower in path is working correctly
+  follower.play('moving_left');*/
 
   //Sprite direction with animation
   this.time.addEvent({
@@ -152,18 +153,20 @@ function create() {
         follower.setFlipX(false);
       }
     }
-  }); 
+  });
 
-  //Use these to see if it is working or getting x and y
+  /*Use these to see if it is working or getting x and y
   console.log("startPointObject.x = " + startPointObject.x);
   console.log("startPointObject.y = " + startPointObject.y);
-  console.log(startPointLayer);
+  console.log(startPointLayer);*/
 
   // TODO: call when we create economy. don't reliant on call order.( bring the level of goldImage and gold text to the top of scene)
   econ.render();
   
   econ.addMoney(150);
   econ.subtractMoney(30);
+
+  //this.enemySpawn(scorpionMob);
   
   
   
