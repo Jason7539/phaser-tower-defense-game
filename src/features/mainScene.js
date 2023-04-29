@@ -1,7 +1,7 @@
 // This is the entry point of your game.
 
 import Economy from "./economy.js";
-//import Enemy from "./Enemy.js";
+import Enemy from "./Enemy.js";
 //import Tower from "./tower.js";
 
 const width = 1024;
@@ -35,7 +35,7 @@ var livesText;
 
 function create() {
   let econ = new Economy(0, this, "gold");
-  //let scorpionMob = new Enemy(ground, 100, 5, 5, 1, this);
+  let scorpionMob = new Enemy(ground, 100, 5, 5, 1, this, load);
   
 
   const centerX = width / 2;
@@ -56,7 +56,7 @@ function create() {
   const tileset = map.addTilesetImage("Grass_Tileset", "tiles");
   const layer = map.createLayer("Background", tileset);
 
-  //Object layers in tiled called Start and End
+  /*//Object layers in tiled called Start and End
   const startPointLayer = map.getObjectLayer("Start");
   const endPointLayer = map.getObjectLayer("End");
 
@@ -128,7 +128,7 @@ function create() {
   Use to see if follower in path is working correctly
   follower.play('moving_left');*/
 
-  //Sprite direction with animation
+  /*//Sprite direction with animation
   this.time.addEvent({
     delay: 5,
     loop: true,
@@ -166,7 +166,7 @@ function create() {
   econ.addMoney(150);
   econ.subtractMoney(30);
 
-  //this.enemySpawn(scorpionMob);
+  scorpionMob.enemySpawn();
   
   
   

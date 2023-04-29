@@ -12,7 +12,7 @@ export default class Enemy {
   startPointLayer;
   endPointLayer;
 
-  constructor(type, healthAmount, speed, reward, lifeDamage, scene, load,) {
+  constructor(type, healthAmount, speed, reward, lifeDamage, scene, load) {
     this.type = type;
     this.healthAmount = healthAmount;
     this.speed = speed;
@@ -73,7 +73,7 @@ export default class Enemy {
 
   //Just added
   animation() {
-    this.load.atlas("scorpion", "Scorpion.png", "Scorpion.json");
+    this.currentScene.load.atlas("scorpion", "Scorpion.png", "Scorpion.json");
     this.currentScene.anims.create({
       key: "moving_left",
       frames: this.currentScene.anims.generateFrameNames("scorpion", {
