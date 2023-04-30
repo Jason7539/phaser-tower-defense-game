@@ -1,8 +1,7 @@
 // This is the entry point of your game.
 
 import Economy from "./economy.js";
-import Enemy from "./Enemy.js";
-//import Tower from "./tower.js";
+import Enemy from "./EnemyV2.js";
 
 const width = 1024;
 const height = 1024;
@@ -25,7 +24,6 @@ function preload() {
   this.load.atlas("scorpion", "Scorpion.png", "Scorpion.json");
 }
 
-
 //Level needs to change when all enemies are dead
 var level = 1;
 var levelText;
@@ -35,8 +33,7 @@ var livesText;
 
 function create() {
   let econ = new Economy(0, this, "gold");
-  let scorpionMob = new Enemy(ground, 100, 5, 5, 1, this, load);
-  
+  // let scorpionMob = new Enemy(ground, 100, 5, 5, 1, this, load);
 
   const centerX = width / 2;
   const centerY = height / 2;
@@ -56,12 +53,12 @@ function create() {
   const tileset = map.addTilesetImage("Grass_Tileset", "tiles");
   const layer = map.createLayer("Background", tileset);
 
-  /*//Object layers in tiled called Start and End
+  //Object layers in tiled called Start and End
   const startPointLayer = map.getObjectLayer("Start");
   const endPointLayer = map.getObjectLayer("End");
 
- //This is to get x and y for enemies pathing (maybe change startPointObject name)
- const startPointObject = startPointLayer.objects.find(
+  //This is to get x and y for enemies pathing (maybe change startPointObject name)
+  const startPointObject = startPointLayer.objects.find(
     (object) =>
       object.properties.find((prop) => prop.name === "StartPoint").value ===
       "200"
@@ -77,58 +74,75 @@ function create() {
   path.lineTo(endPointObject.x, endPointObject.y);
   const startPoint = new Phaser.Math.Vector2(
     startPointObject.x,
-    startPointObject.y,
+    startPointObject.y
   );
   const endPoint = new Phaser.Math.Vector2(endPointObject.x, endPointObject.y);
 
-  //Animations
-  this.anims.create({
-    key: "moving_left",
-    frames: this.anims.generateFrameNames("scorpion", {
-      prefix: "Walk",
-      end: 7,
-      zeroPad: 3,
-    }),
-    repeat: -1,
-  });
-  this.anims.create({
-    key: "up",
-    frames: this.anims.generateFrameNames("scorpion", {
-      prefix: "U",
-      end: 7,
-      zeroPad: 3,
-    }),
-    repeat: -1,
-  });
-  this.anims.create({
-    key: "down",
-    frames: this.anims.generateFrameNames("scorpion", {
-      prefix: "D",
-      end: 7,
-      zeroPad: 3,
-    }),
-    repeat: -1,
-  });
+  // //Animations: control what animations scorpion has access
+  // this.anims.create({
+  //   key: "moving_left",
+  //   frames: this.anims.generateFrameNames("scorpion", {
+  //     prefix: "Walk",
+  //     end: 7,
+  //     zeroPad: 3,
+  //   }),
+  //   repeat: -1,
+  // });
+  // this.anims.create({
+  //   key: "up",
+  //   frames: this.anims.generateFrameNames("scorpion", {
+  //     prefix: "U",
+  //     end: 7,
+  //     zeroPad: 3,
+  //   }),
+  //   repeat: -1,
+  // });
+  // this.anims.create({
+  //   key: "down",
+  //   frames: this.anims.generateFrameNames("scorpion", {
+  //     prefix: "D",
+  //     end: 7,
+  //     zeroPad: 3,
+  //   }),
+  //   repeat: -1,
+  // });
 
   //Sprite or animation for pathing
-  const follower = this.add.follower(
-    path,
-    startPointObject.x,
-    startPointObject.y,
-    "scorpion"
-  );
-  follower.startFollow({
-    duration: 10000,
-    ease: "Linear",
-    anims: this.anims,
-  });
+  // jason: we have created path. this adds an image to follow that path
 
-  /*Use to see sprite
-  const groundScorpion = this.add.sprite(startPointObject.x, startPointObject.y, 'scorpion').play('moving_left')
-  Use to see if follower in path is working correctly
-  follower.play('moving_left');*/
+  // const follower = this.add.follower(
+  //   path,
+  //   startPointObject.x,
+  //   startPointObject.y,
+  //   "scorpion"
+  // );
+  // follower.startFollow({
+  //   duration: 10000,
+  //   ease: "Linear",
+  //   // anims: this.anims,
+  // });
+
+  const scorp = new Enemy(
+    "ground",
+    100,
+    100,
+    100,
+    100,
+    this,
+    startPointObject,
+    endPointObject
+  );
+
+  scorp.spawn(path, startPointObject.x, startPointObject.y, "scorpion");
+  scorp.renderEnemyToPath(10000, "Linear");
+
+  //Use to see sprite
+  //const groundScorpion = this.add.sprite(startPointObject.x, startPointObject.y, 'scorpion').play('moving_left')
+  //Use to see if follower in path is working correctly
+  //follower.play('moving_left');*/
 
   /*//Sprite direction with animation
+  // actual playing the animation based direction of enemy
   this.time.addEvent({
     delay: 5,
     loop: true,
@@ -162,14 +176,11 @@ function create() {
 
   // TODO: call when we create economy. don't reliant on call order.( bring the level of goldImage and gold text to the top of scene)
   econ.render();
-  
+
   econ.addMoney(150);
   econ.subtractMoney(30);
 
-  scorpionMob.enemySpawn();
-  
-  
-  
+  // scorpionMob.enemySpawn();
 
   //Maybe change fontFamily later
   levelText = this.add.text(425, 15, "Level:1/5", {

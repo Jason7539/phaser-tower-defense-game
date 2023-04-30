@@ -1,7 +1,3 @@
-import Tower from "./tower";
-
-const e = require("express");
-
 export default class Enemy {
   type;
   healthAmount;
@@ -30,24 +26,24 @@ export default class Enemy {
   }
 
   takeDamage(damage) {
-    this.healthAmount -= damage
-    
+    this.healthAmount -= damage;
   }
-  
-  getReward(){
+
+  getReward() {
     if (this.healthAmount === 0) {
-      return this.reward
+      return this.reward;
     }
   }
 
   losingLives() {
-     lives -= this.lifeDamage
+    lives -= this.lifeDamage;
   }
 
   getStartPoint() {
     const startPointObject = this.currentScene.startPointLayer.objects.find(
       (object) =>
-        object.properties.find((prop) => prop.name === "StartPoint").value === "200"
+        object.properties.find((prop) => prop.name === "StartPoint").value ===
+        "200"
     );
     return startPointObject;
   }
@@ -55,7 +51,8 @@ export default class Enemy {
   getEndPoint() {
     const endPointObject = this.currentScene.endPointLayer.objects.find(
       (object) =>
-        object.properties.find((prop) => prop.name === "EndPoint").value === "200"
+        object.properties.find((prop) => prop.name === "EndPoint").value ===
+        "200"
     );
     return endPointObject;
   }
@@ -66,9 +63,15 @@ export default class Enemy {
     const endPointObject = this.getEndPoint();
     path.moveTo(startPointObject.x, startPointObject.y);
     path.lineTo(endPointObject.x, endPointObject.y);
-    const startPoint = new Phaser.Math.Vector2(startPointObject.x, startPointObject.y,);
-    const endPoint = new Phaser.Math.Vector2(endPointObject.x, endPointObject.y);
-    return {path, startPoint, endPoint};
+    const startPoint = new Phaser.Math.Vector2(
+      startPointObject.x,
+      startPointObject.y
+    );
+    const endPoint = new Phaser.Math.Vector2(
+      endPointObject.x,
+      endPointObject.y
+    );
+    return { path, startPoint, endPoint };
   }
 
   //Just added
@@ -109,7 +112,12 @@ export default class Enemy {
     const { path, startPoint, endPoint } = this.getPath();
 
     //ask about path or using this.get
-    const follower = this.currentScene.add.follower(path, startPointObject.x, startPointObject.y, animation);
+    const follower = this.currentScene.add.follower(
+      path,
+      startPointObject.x,
+      startPointObject.y,
+      animation
+    );
     follower.startFollow({
       duration: 10000,
       ease: "Linear",
@@ -139,7 +147,7 @@ export default class Enemy {
           follower.anims.play("up", true);
           follower.setFlipX(false);
         }
-      }
+      },
     });
   }
 
@@ -152,9 +160,7 @@ export default class Enemy {
   }*/
 }
 
-
-
-Questions
+// Questions;
 /*Can my method name be the same as a const?
 How do i know if i used const and this correctly?
 startPointLayer = map.getObjectLayer("Start")
