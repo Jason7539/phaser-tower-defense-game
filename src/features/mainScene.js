@@ -2,6 +2,7 @@
 
 import Economy from "./economy.js";
 import Enemy from "./EnemyV2.js";
+import Hud from "./Hud.js";
 
 const width = 1024;
 const height = 1024;
@@ -33,20 +34,9 @@ var livesText;
 
 function create() {
   let econ = new Economy(0, this, "gold");
-  // let scorpionMob = new Enemy(ground, 100, 5, 5, 1, this, load);
+  let start = new Hud(this);
 
-  const centerX = width / 2;
-  const centerY = height / 2;
-
-  let playButton = this.add
-    .image(centerX, centerY * 1.2, "play_button")
-    .setInteractive();
-
-  playButton.on("pointerdown", () => {
-    alert("clicked button");
-  });
-
-  playButton.setDepth(1);
+  start.loadPlayButton(width, height,);
 
   //Background of game
   const map = this.make.tilemap({ key: "map" });
@@ -136,11 +126,6 @@ function create() {
   scorp.spawn(path, startPointObject.x, startPointObject.y, "scorpion");
   scorp.renderEnemyToPath(10000, "Linear");
 
-  //Use to see sprite
-  //const groundScorpion = this.add.sprite(startPointObject.x, startPointObject.y, 'scorpion').play('moving_left')
-  //Use to see if follower in path is working correctly
-  //follower.play('moving_left');*/
-
   /*//Sprite direction with animation
   // actual playing the animation based direction of enemy
   this.time.addEvent({
@@ -169,18 +154,11 @@ function create() {
     }
   });
 
-  /*Use these to see if it is working or getting x and y
-  console.log("startPointObject.x = " + startPointObject.x);
-  console.log("startPointObject.y = " + startPointObject.y);
-  console.log(startPointLayer);*/
-
   // TODO: call when we create economy. don't reliant on call order.( bring the level of goldImage and gold text to the top of scene)
   econ.render();
 
   econ.addMoney(150);
   econ.subtractMoney(30);
-
-  // scorpionMob.enemySpawn();
 
   //Maybe change fontFamily later
   levelText = this.add.text(425, 15, "Level:1/5", {
@@ -190,5 +168,5 @@ function create() {
   livesText = this.add.text(812, 15, "Lives:50", {
     fontSize: "32px",
     fill: "#000",
-  });
+  });*/
 }
