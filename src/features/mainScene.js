@@ -126,33 +126,33 @@ function create() {
   scorp.spawn(path, startPointObject.x, startPointObject.y, "scorpion");
   scorp.renderEnemyToPath(10000, "Linear");
 
-  /*//Sprite direction with animation
+  //Sprite direction with animation
   // actual playing the animation based direction of enemy
-  this.time.addEvent({
-    delay: 5,
-    loop: true,
-    callback: () => {
-      const { x, y } = follower;
-      const angle = Phaser.Math.Angle.BetweenPoints(startPoint, endPoint);
+  // this.time.addEvent({
+  //   delay: 5,
+  //   loop: true,
+  //   callback: () => {
+  //     const { x, y } = follower;
+  //     const angle = Phaser.Math.Angle.BetweenPoints(startPoint, endPoint);
 
-      if (
-        (angle > -Math.PI && angle <= (-3 * Math.PI) / 4) ||
-        (angle >= Math.PI / 4 && angle <= Math.PI)
-      ) {
-        follower.anims.play("moving_left", true);
-        follower.setFlipX(true);
-      } else if (angle > Math.PI / 4 && angle <= (3 * Math.PI) / 4) {
-        follower.anims.play("down", true);
-        follower.setFlipX(false);
-      } else if (angle > (-3 * Math.PI) / 4 && angle <= -Math.PI / 4) {
-        follower.anims.play("moving_left", true);
-        follower.setFlipX(false);
-      } else {
-        follower.anims.play("up", true);
-        follower.setFlipX(false);
-      }
-    }
-  });
+  //     if (
+  //       (angle > -Math.PI && angle <= (-3 * Math.PI) / 4) ||
+  //       (angle >= Math.PI / 4 && angle <= Math.PI)
+  //     ) {
+  //       follower.anims.play("moving_left", true);
+  //       follower.setFlipX(true);
+  //     } else if (angle > Math.PI / 4 && angle <= (3 * Math.PI) / 4) {
+  //       follower.anims.play("down", true);
+  //       follower.setFlipX(false);
+  //     } else if (angle > (-3 * Math.PI) / 4 && angle <= -Math.PI / 4) {
+  //       follower.anims.play("moving_left", true);
+  //       follower.setFlipX(false);
+  //     } else {
+  //       follower.anims.play("up", true);
+  //       follower.setFlipX(false);
+  //     }
+  //   }
+  // });
 
   // TODO: call when we create economy. don't reliant on call order.( bring the level of goldImage and gold text to the top of scene)
   econ.render();
@@ -168,5 +168,5 @@ function create() {
   livesText = this.add.text(812, 15, "Lives:50", {
     fontSize: "32px",
     fill: "#000",
-  });*/
+  });
 }

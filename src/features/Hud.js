@@ -2,6 +2,7 @@
 export default class Hud {
     currentScene
     playButton;
+    lives;
 
     constructor (scene) {
         this.currentScene = scene;
@@ -18,4 +19,6 @@ export default class Hud {
 
         this.playButton.setDepth(1);
     }
+
+    
 }
