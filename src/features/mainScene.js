@@ -23,6 +23,9 @@ function preload() {
   this.load.image("play_button", "play_button.png");
   this.load.image("gold", "gold.png");
   this.load.atlas("scorpion", "Scorpion.png", "Scorpion.json");
+  this.load.atlas("arrow", "arrowTower.png", "arrowTower.json");
+  this.load.atlas("splash", "splashTower.png", "splashTower.json");
+  this.load.atlas("mage", "mageTower.png", "mageTower.json");
 }
 
 //Level needs to change when all enemies are dead
@@ -34,9 +37,23 @@ var livesText;
 
 function create() {
   let econ = new Economy(0, this, "gold");
-  let start = new Hud(this);
+  
+  let startbutton = new Hud(this);
 
-  start.loadPlayButton(width, height,);
+  startbutton.loadPlayButton(width, height);
+
+  let graphics = this.add.graphics();
+  graphics.fillStyle(0xFFA500, 0.7);
+  let rectangle = new Phaser.Geom.Rectangle(0, height * 0.75, width, height * 0.25)
+  let createShape = graphics.fillRectShape(rectangle);
+  graphics.depth = 1;
+  // console.log(rectangle);
+  // console.log(createShape);
+
+  let hello = "hello world!!!!!";
+  console.log(hello);
+  
+
 
   //Background of game
   const map = this.make.tilemap({ key: "map" });
