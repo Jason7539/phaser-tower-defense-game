@@ -42,13 +42,26 @@ function create() {
 
   startbutton.loadPlayButton(width, height);
 
+  //Hud
   let graphics = this.add.graphics();
-  graphics.fillStyle(0xFFA500, 0.7);
-  let rectangle = new Phaser.Geom.Rectangle(0, height * 0.75, width, height * 0.25)
-  let createShape = graphics.fillRectShape(rectangle);
+  graphics.fillStyle(0x000000, 0.7);
+  graphics.fillRectShape(new Phaser.Geom.Rectangle(0, height * 0.90, width, height * 0.90));
   graphics.depth = 1;
-  // console.log(rectangle);
-  // console.log(createShape);
+  
+  let towerImagesPositions = [
+    { x: width * 0.25, y: height * 0.875 },
+    { x: width * 0.5, y: height * 0.875 },
+    { x: width * 0.75, y: height * 0.875 },
+  ];
+
+  let towerImages = [  
+    {tower1: this.anims.generateFrameNames('arrow', { frames: ['Arrow00'] })},
+    {tower2: this.anims.generateFrameNames('splash', { frames: ['Splash00'] })},
+    {tower3: this.anims.generateFrameNames('mage', { frames: ['Mage00'] })},
+  ];
+  
+ 
+
 
   let hello = "hello world!!!!!";
   console.log(hello);
