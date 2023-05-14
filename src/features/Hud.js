@@ -4,6 +4,7 @@ export default class Hud {
     playButton;
     graphics;
     lives;
+    towerImages;
 
     constructor (scene) {
         this.currentScene = scene;
@@ -31,11 +32,13 @@ export default class Hud {
         // Draw a rectangle to cover the bottom of the screen
         this.graphics.fillRectShape(new Phaser.Geom.Rectangle(0, height * 0.90, width, height * 0.90));
         this.graphics.depth = 1;
+
+        //this.towerImages = []
     }
     
 }
 
 // for loop
-// for (initialization; condition; increment/decrement) {
-//      code to be executed
+// for (initialization; condition; increment++/decrement--) {
+//     code to be executed
 //   }

@@ -48,20 +48,55 @@ function create() {
   graphics.fillRectShape(new Phaser.Geom.Rectangle(0, height * 0.90, width, height * 0.90));
   graphics.depth = 1;
   
+  //Maybe make grid instead? or find way to format images same size
   let towerImagesPositions = [
     { x: width * 0.25, y: height * 0.875 },
     { x: width * 0.5, y: height * 0.875 },
     { x: width * 0.75, y: height * 0.875 },
   ];
 
-  let towerImages = [  
-    {tower1: this.anims.generateFrameNames('arrow', { frames: ['Arrow00'] })},
-    {tower2: this.anims.generateFrameNames('splash', { frames: ['Splash00'] })},
-    {tower3: this.anims.generateFrameNames('mage', { frames: ['Mage00'] })},
+  let towerFrames = [  
+    { name: 'arrow', frame: 'Arrow00' },  
+    { name: 'splash', frame: 'Splash00' },  
+    { name: 'mage', frame: 'Mage00' },
   ];
-  
- 
 
+  let playerHud = [];
+
+  for (let i = 0; i < towerFrames.length; i++) {
+    //Grabs data from atlas 'arrow'
+    let frameData = this.textures.getFrame(towerFrames[i].name, towerFrames[i].frame);
+    
+    //Uses data from frameData and towerImagePositions to create image
+    let towerImage = this.add.image(towerImagesPositions[i].x, towerImagesPositions[i].y, frameData.texture.key, frameData.name)
+
+    //Enaables interactivity
+    towerImage.setInteractive();
+    
+    let scene = this;
+    let cursorText = `Tower ${i + 1}`;
+    //Make cursorTextLocation null so that it is not always happening avoiding dupes
+    let cursorTextLocation = null;
+
+    towerImage.on('pointerover', function(pointer) {
+      if (!cursorTextLocation) {
+        cursorTextLocation = scene.add.text(pointer.x, pointer.y, cursorText, {fontSize: '16px', fill: '#ffffff'});
+        cursorTextLocation.setOrigin(0.1);
+      }
+    });
+
+    towerImage.on('pointerout', function(pointer) {
+      console.log('event triggered');
+      if (cursorTextLocation) {
+        cursorTextLocation.destroy();
+        cursorTextLocation = null;
+      }
+    });
+
+    playerHud.push(towerImage);
+    playerHud[i].setVisible(true);
+    playerHud[i].depth = 1;
+  };
 
   let hello = "hello world!!!!!";
   console.log(hello);
