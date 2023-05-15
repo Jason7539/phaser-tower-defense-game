@@ -39,15 +39,11 @@ function create() {
   let econ = new Economy(0, this, "gold");
   
   let startbutton = new Hud(this);
+  let bottomHud = new Hud(this);
 
-  startbutton.loadPlayButton(width, height);
+  startbutton.createPlayButton(width, height);
+  bottomHud.createHUD(width, height);
 
-  //Hud
-  let graphics = this.add.graphics();
-  graphics.fillStyle(0x000000, 0.7);
-  graphics.fillRectShape(new Phaser.Geom.Rectangle(0, height * 0.90, width, height * 0.90));
-  graphics.depth = 1;
-  
   //Maybe make grid instead? or find way to format images same size
   let towerImagesPositions = [
     { x: width * 0.25, y: height * 0.875 },
@@ -75,7 +71,7 @@ function create() {
     
     let scene = this;
     let cursorText = `Tower ${i + 1}`;
-    //Make cursorTextLocation null so that it is not always happening avoiding dupes
+    //Make cursorTextLocation null so that it is not always happening, avoiding dupes
     let cursorTextLocation = null;
 
     towerImage.on('pointerover', function(pointer) {
@@ -85,7 +81,7 @@ function create() {
       }
     });
 
-    towerImage.on('pointerout', function(pointer) {
+    towerImage.on('pointerout', function() {
       console.log('event triggered');
       if (cursorTextLocation) {
         cursorTextLocation.destroy();

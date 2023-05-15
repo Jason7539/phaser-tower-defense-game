@@ -1,6 +1,6 @@
 
 export default class Hud {
-    currentScene
+    currentScene;
     playButton;
     graphics;
     lives;
@@ -10,7 +10,7 @@ export default class Hud {
         this.currentScene = scene;
     }
 
-    loadPlayButton(width, height) {
+    createPlayButton(width, height) {
         this.playButton = this.currentScene.add
         .image(width/2, height/2 * 1.2, "play_button")
         .setInteractive();
@@ -22,20 +22,18 @@ export default class Hud {
         this.playButton.setDepth(1);
     }
 
-    createHUD() {
+    createHUD(width, height) {
         // Create a graphics object to draw the HUD background
         this.graphics = this.currentScene.add.graphics();
 
         // Set the fill style to create a transparent background
-        this.graphics.fillSyle(0x000000, 0.7);
+        this.graphics.fillStyle(0x000000, 0.7);
 
         // Draw a rectangle to cover the bottom of the screen
         this.graphics.fillRectShape(new Phaser.Geom.Rectangle(0, height * 0.90, width, height * 0.90));
         this.graphics.depth = 1;
 
-        //this.towerImages = []
-    }
-    
+    }   
 }
 
 // for loop
