@@ -46,10 +46,20 @@ function create() {
 
   //Maybe make grid instead? or find way to format images same size
   let towerImagesPositions = [
-    { x: width * 0.25, y: height * 0.875 },
-    { x: width * 0.5, y: height * 0.875 },
-    { x: width * 0.75, y: height * 0.875 },
+    { x: width * 0.25, y: height * 0.90 },
+    { x: width * 0.5, y: height * 0.90 },
+    { x: width * 0.75, y: height * 0.90 },
   ];
+
+  //Working on grid way
+  // let rows = 1;
+  // let columns = towerFrames.length;
+
+  // let spacingX = 10;
+  // let spacingY = 10;
+
+  // let startX = (rectangleHud * 0.1);
+  // let startY = (rectangleHud.centerY);
 
   let towerFrames = [  
     { name: 'arrow', frame: 'Arrow00' },  
@@ -64,7 +74,11 @@ function create() {
     let frameData = this.textures.getFrame(towerFrames[i].name, towerFrames[i].frame);
     
     //Uses data from frameData and towerImagePositions to create image
-    let towerImage = this.add.image(towerImagesPositions[i].x, towerImagesPositions[i].y, frameData.texture.key, frameData.name)
+    let towerImage = this.add.image(towerImagesPositions[i].x, towerImagesPositions[i].y, 
+      frameData.texture.key, 
+      frameData.name
+      );
+    towerImage.setScale(0.70);
 
     //Enaables interactivity
     towerImage.setInteractive();
@@ -78,6 +92,7 @@ function create() {
       if (!cursorTextLocation) {
         cursorTextLocation = scene.add.text(pointer.x, pointer.y, cursorText, {fontSize: '16px', fill: '#ffffff'});
         cursorTextLocation.setOrigin(0.1);
+        cursorTextLocation.depth = 2;
       }
     });
 

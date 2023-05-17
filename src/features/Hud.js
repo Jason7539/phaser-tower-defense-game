@@ -30,9 +30,9 @@ export default class Hud {
         this.graphics.fillStyle(0x000000, 0.7);
 
         // Draw a rectangle to cover the bottom of the screen
-        this.graphics.fillRectShape(new Phaser.Geom.Rectangle(0, height * 0.90, width, height * 0.90));
+        let rectangleHud = (new Phaser.Geom.Rectangle(0, height * 0.90, width, height * 0.90));
+        this.graphics.fillRectShape(rectangleHud);
         this.graphics.depth = 1;
-
     }   
 }
 
