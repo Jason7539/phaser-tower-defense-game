@@ -11,6 +11,7 @@ export default class Tower {
         this.maxLevel = 1;
         this.x = x;
         this.y = y;
+        this.assetName = assetName;
     }      
 
     //Possible methods

@@ -39,3 +39,48 @@ export default class Enemy {
     });
   }
 }
+
+//Add later
+// //Animations: control what animations scorpion has access
+  // this.anims.create({
+  //   key: "moving_left",
+  //   frames: this.anims.generateFrameNames("scorpion", {
+  //     prefix: "Walk",
+  //     end: 7,
+  //     zeroPad: 3,
+  //   }),
+  //   repeat: -1,
+  // });
+  // this.anims.create({
+  //   key: "up",
+  //   frames: this.anims.generateFrameNames("scorpion", {
+  //     prefix: "U",
+  //     end: 7,
+  //     zeroPad: 3,
+  //   }),
+  //   repeat: -1,
+  // });
+  // this.anims.create({
+  //   key: "down",
+  //   frames: this.anims.generateFrameNames("scorpion", {
+  //     prefix: "D",
+  //     end: 7,
+  //     zeroPad: 3,
+  //   }),
+  //   repeat: -1,
+  // });
+
+  //Sprite or animation for pathing
+  // jason: we have created path. this adds an image to follow that path
+
+  // const follower = this.add.follower(
+  //   path,
+  //   startPointObject.x,
+  //   startPointObject.y,
+  //   "scorpion"
+  // );
+  // follower.startFollow({
+  //   duration: 10000,
+  //   ease: "Linear",
+  //   // anims: this.anims,
+  // });
