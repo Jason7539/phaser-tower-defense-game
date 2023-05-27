@@ -3,6 +3,7 @@
 import Economy from "./economy.js";
 import Enemy from "./EnemyV2.js";
 import Hud from "./Hud.js";
+import Tower from "./tower.js";
 
 let width = 1024;
 let height = 900;
@@ -36,25 +37,26 @@ var lives = 50;
 var livesText;
 
 function create() {
+  //Economy classes
   let econ = new Economy(0, this, "gold");
   
+  //Hud classes
   let startbutton = new Hud(this, width, height);
   let bottomHud = new Hud(this, width, height);
 
-  // let arrow = new Tower(5, 50, 5, singletarget, 2, 50,);
-  // let siege = new Tower(5, 50, 5, splash, 5, 50,);
-  // let mage = new Tower(10, 50, 5, singletarget, 5, 50,);
-
+  //Tower classes
+  let arrow = new Tower(5, 50, 5, 2, 50,);
+  arrow.name = 'Arrow';
+  let siege = new Tower(5, 50, 5, 5, 50,);
+  siege.name = 'Siege';
+  let mage = new Tower(10, 50, 5, 5, 50,);
+  mage.name = 'Mage';
   let towerClassInstances = [ arrow, siege, mage ]; 
+
 
   startbutton.createPlayButton("play_button");
   bottomHud.createHUD();
-  bottomHud.createInteractableTowerImage();
-
-
-  let hello = "hello world!!!!!";
-  console.log(hello);
-  
+  bottomHud.createInteractableTowerImage(towerClassInstances);
 
 
   //Background of game

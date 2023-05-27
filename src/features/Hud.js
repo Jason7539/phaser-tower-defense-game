@@ -53,7 +53,7 @@ export default class Hud {
         
     }   
     
-    createInteractableTowerImage() {
+    createInteractableTowerImage(towerClassInstances) {
 
         for (let i = 0; i < this.towerFrames.length; i++) {
             
@@ -67,10 +67,28 @@ export default class Hud {
                 frameData.texture.key, 
                 frameData.name
                 );
+            //Gives  reference for the Tower class properties
+            towerImage.towerProperties = towerClassInstances[i];
             towerImage.setScale(0.60);
-
-            //towerImage.towerProperties = towerClassInstance[i];
-
+            
+            //Add goldcost and tower name to image
+            let goldCostText = this.currentScene.add.text( 
+                this.towerImagesPositions[i].x,
+                this.towerImagesPositions[i].y, 
+                towerImage.towerProperties.cost, 
+                {fontSize: '16px', fill: '#00ff00'}
+            );
+            goldCostText.depth = 1;
+            goldCostText.setOrigin(-1.25,-1.5)
+            
+            let towerNameText = this.currentScene.add.text(
+                this.towerImagesPositions[i].x,
+                this.towerImagesPositions[i].y,
+                towerClassInstances[i].name,
+                {fontSize: '16px', fill: '#00ff00'}
+            );
+            towerNameText.depth = 1;
+            towerNameText.setOrigin(.5, 3)
             
             // Enaables interactivity for image
             towerImage.setInteractive();
@@ -114,8 +132,5 @@ export default class Hud {
     }
 }
 
-// for loop
-// for (initialization; condition; increment++/decrement--) {
-//     code to be executed
-//   }
-
+//If adding image or text make .depth = 1
+//Note to fix mage tower go into asperite sprite->canvas cut to 128 and move layer 1 then redo json files

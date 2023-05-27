@@ -1,17 +1,15 @@
-import Enemy from "./Enemy.js";
+
 
 export default class Tower {
-    constructor(damage, range, attackSpeed, targeting, cost, upgradeCost, maxLevel, x, y) {
+    constructor(damage, range, attackSpeed, cost, upgradeCost, x, y) {
         this.damage = damage;
         this.range = range;
         this.attackSpeed = attackSpeed;
-        this.targeting = targeting;
         this.cost = cost;
         this.upgradeCost = upgradeCost;
-        this.maxLevel = 1;
+        // this.maxLevel = 1;
         this.x = x;
         this.y = y;
-        this.assetName = assetName;
     }      
 
     //Possible methods
@@ -50,8 +48,4 @@ export default class Tower {
     }
 }
 
-const arrow = new Tower(5, 50, 5, singletarget, 2, 50,);
-const siege = new Tower(5, 50, 5, splash, 5, 50,);
-const mage = new Tower(10, 50, 5, singletarget, 5, 50,);
 
-module.exports = Tower;
