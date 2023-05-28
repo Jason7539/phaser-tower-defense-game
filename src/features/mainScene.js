@@ -56,7 +56,7 @@ function create() {
 
   startbutton.createPlayButton("play_button");
   bottomHud.createHUD();
-  bottomHud.createInteractableTowerImage(towerClassInstances);
+  bottomHud.createTowerImage(towerClassInstances);
 
 
   //Background of game
