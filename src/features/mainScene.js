@@ -38,7 +38,7 @@ var livesText;
 
 function create() {
   //Economy classes
-  let econ = new Economy(0, this, "gold");
+  let econ = new Economy(100, this, "gold");
   
   //Hud classes
   let startbutton = new Hud(this, width, height);
@@ -57,6 +57,7 @@ function create() {
   startbutton.createPlayButton("play_button");
   bottomHud.createHUD();
   bottomHud.createTowerImage(towerClassInstances);
+  bottomHud.createEventsForTowers(econ);
 
 
   //Background of game

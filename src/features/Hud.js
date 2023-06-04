@@ -53,7 +53,7 @@ export default class Hud {
         
     }   
     
-    createInteractableTowerImage(towerClassInstances) {
+    createTowerImage(towerClassInstances) {
 
         for (let i = 0; i < this.towerFrames.length; i++) {
             
@@ -66,21 +66,21 @@ export default class Hud {
                 this.towerImagesPositions[i].y,
                 frameData.texture.key, 
                 frameData.name
-                );
-            //Gives  reference for the Tower class properties
-            towerImage.towerProperties = towerClassInstances[i];
-            towerImage.setScale(0.60);
-            
-            //Add goldcost and tower name to image
+            );
+            //Gives refrence to properties to gameobject towerImage -> So when i push to towerHud I am able to grab properties
+            towerImage.Properties = towerClassInstances[i];
+
+            //Add goldcost to image
             let goldCostText = this.currentScene.add.text( 
                 this.towerImagesPositions[i].x,
                 this.towerImagesPositions[i].y, 
-                towerImage.towerProperties.cost, 
+                towerClassInstances[i].cost, 
                 {fontSize: '16px', fill: '#00ff00'}
             );
             goldCostText.depth = 1;
-            goldCostText.setOrigin(-1.25,-1.5)
+            goldCostText.setOrigin(-1.25,-1.5);
             
+            //Add tower name to image
             let towerNameText = this.currentScene.add.text(
                 this.towerImagesPositions[i].x,
                 this.towerImagesPositions[i].y,
@@ -88,47 +88,25 @@ export default class Hud {
                 {fontSize: '16px', fill: '#00ff00'}
             );
             towerNameText.depth = 1;
-            towerNameText.setOrigin(.5, 3)
+            towerNameText.setOrigin(.5, 3);
             
-            // Enaables interactivity for image
-            towerImage.setInteractive();
-
-            
-            let cursorText = `Tower ${i + 1}`;
-            //Make cursorTextLocation null so that it is not always happening, avoiding dupes
-            let cursorTextLocation = null;
-                
-            //Makes tooltip of tower over cursor
-            towerImage.on('pointerover', (pointer) => {
-              if (!cursorTextLocation) {
-                cursorTextLocation = this.currentScene.add.text(pointer.x, pointer.y, cursorText, {fontSize: '16px', fill: '#ffffff'});
-                cursorTextLocation.setOrigin(0.1);
-                cursorTextLocation.depth = 2;
-                //Just testing to see data about mouse for practice can delete  later
-                console.log(pointer);
-              }
-            });
-        
-            //Deletes the tooltip when cursor leaves tower
-            towerImage.on('pointerout', () => {
-              console.log('event triggered');
-              if (cursorTextLocation) {
-                cursorTextLocation.destroy();
-                cursorTextLocation = null;
-              }
-            });
-
-            towerImage.on('pointerdown', () => {
-
-            });
-            
-
-            //Loads towerImage
+            //Loads towerImage but you can just just towerImage instead of creating towerHud
             this.towerHud.push(towerImage);
             this.towerHud[i].depth = 1
             this.towerHud[i].setVisible(true);
+            this.towerHud[i].setScale(0.60);
+            this.towerHud[i].setInteractive();
 
          };
+    }
+
+    createEventsForTowers(econ) {
+        for (let i = 0; i < this.towerHud.length; i++) {
+            this.towerHud[i].on ('pointerdown', () => {
+                econ.subtractMoney(this.towerHud[i].Properties.cost);
+                console.log(this.towerHud[i].Properties.cost);
+            });    
+        }
     }
 }
 
