@@ -39,6 +39,32 @@ export default class Hud {
         this.playButton.setDepth(1);
     }
 
+    createLevelsText() {
+        //Maybe change fontFamily later
+        let levelText = this.currentScene.add.text(425, 15, "Level:1/5", {
+        fontSize: "32px",
+        fill: "#000",
+        });
+
+        levelText.setDepth(1);
+    }
+
+    createLivesText() {
+        let livesText = this.currentScene.add.text(812, 15, "Lives:50", {
+        fontSize: "32px",
+        fill: "#000",
+        });
+
+        livesText.setDepth(1);
+    }
+
+    createGrid() {
+        let grid = this.currentScene.add.grid(0, 0, this.width, this.height, 64, 64,).setOutlineStyle(0xb038d7);
+        grid.depth = 1;
+        grid.setOrigin(0,0);
+        //tower image dimensions are w 64 h 128 so maybe cell width and height 64
+    }
+
     createHUD() {
         // Create a graphics object to draw the HUD background
         this.graphics = this.currentScene.add.graphics();
@@ -54,7 +80,6 @@ export default class Hud {
     }   
     
     createTowerImage(towerClassInstances) {
-
         for (let i = 0; i < this.towerFrames.length; i++) {
             
             //Grabs data from atlas 'arrow'
@@ -108,6 +133,7 @@ export default class Hud {
             });    
         }
     }
+
 }
 
 //If adding image or text make .depth = 1

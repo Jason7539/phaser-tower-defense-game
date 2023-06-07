@@ -29,12 +29,6 @@ function preload() {
   this.load.atlas("mage", "mageTower.png", "mageTower.json");
 }
 
-//Level needs to change when all enemies are dead
-var level = 1;
-var levelText;
-
-var lives = 50;
-var livesText;
 
 function create() {
   //Economy classes
@@ -42,6 +36,8 @@ function create() {
   
   //Hud classes
   let startbutton = new Hud(this, width, height);
+  let grid = new Hud(this, width, height);
+  let topHud = new Hud(this, width, height);
   let bottomHud = new Hud(this, width, height);
 
   //Tower classes
@@ -53,8 +49,11 @@ function create() {
   mage.name = 'Mage';
   let towerClassInstances = [ arrow, siege, mage ]; 
 
-
+  //Hud class methods
   startbutton.createPlayButton("play_button");
+  grid.createGrid();
+  topHud.createLevelsText();
+  topHud.createLivesText();
   bottomHud.createHUD();
   bottomHud.createTowerImage(towerClassInstances);
   bottomHud.createEventsForTowers(econ);
@@ -113,14 +112,5 @@ function create() {
   econ.addMoney(150);
   econ.subtractMoney(30);
 
-  //Maybe change fontFamily later
-  levelText = this.add.text(425, 15, "Level:1/5", {
-    fontSize: "32px",
-    fill: "#000",
-  });
-  livesText = this.add.text(812, 15, "Lives:50", {
-    fontSize: "32px",
-    fill: "#000",
-  });
 }
  
