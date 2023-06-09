@@ -126,11 +126,37 @@ export default class Hud {
     }
 
     createEventsForTowers(econ) {
+
         for (let i = 0; i < this.towerHud.length; i++) {
             this.towerHud[i].on ('pointerdown', () => {
                 econ.subtractMoney(this.towerHud[i].Properties.cost);
                 console.log(this.towerHud[i].Properties.cost);
+                
             });    
+        }
+    }
+
+    //Maybe add later into createEventsForTowers method
+    createOutline(pluginName) {
+
+        for (let i = 0; i < this.towerHud.length; i++) {
+            let outlinePipeline = this.currentScene.plugins.get(pluginName).add(this.towerHud[i]);
+
+            // Set initial outline
+            outlinePipeline.setOutlineColor(0xffffff); // Set the outline color to transparent
+            outlinePipeline.setThickness(1.5); // Set the outline thickness to 
+
+            this.towerHud[i].on ('pointerover', () => {
+                // Add red outline effect
+                outlinePipeline.setOutlineColor(0xc41c00); 
+                outlinePipeline.setThickness(1.5); 
+            });   
+
+            this.towerHud[i].on('pointerout', () => {
+                // removes outline effect manually by setting to initial outline
+                outlinePipeline.setOutlineColor(0xffffff); // Set the outline color to transparent
+                outlinePipeline.setThickness(1.5); // Set the outline thickness to 0
+              });
         }
     }
 

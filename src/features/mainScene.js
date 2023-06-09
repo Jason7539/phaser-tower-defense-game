@@ -19,6 +19,7 @@ let config = {
 let game = new Phaser.Game(config);
 
 function preload() {
+  this.load.plugin('rexoutlinepipelineplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexoutlinepipelineplugin.min.js', true);
   this.load.tilemapTiledJSON("map", "map01.json");
   this.load.image("tiles", "Grass_Tileset.png");
   this.load.image("play_button", "play_button.png");
@@ -57,6 +58,7 @@ function create() {
   bottomHud.createHUD();
   bottomHud.createTowerImage(towerClassInstances);
   bottomHud.createEventsForTowers(econ);
+  bottomHud.createOutline('rexoutlinepipelineplugin');
 
 
   //Background of game
