@@ -92,7 +92,7 @@ export default class Hud {
                 frameData.texture.key, 
                 frameData.name
             );
-            //Gives refrence to properties to gameobject towerImage -> So when i push to towerHud I am able to grab properties
+            //Gives refrence to properties to this.towerHud[i] towerImage -> So when i push to towerHud I am able to grab properties
             towerImage.Properties = towerClassInstances[i];
 
             //Add goldcost to image
@@ -122,10 +122,10 @@ export default class Hud {
             this.towerHud[i].setScale(0.60);
             this.towerHud[i].setInteractive();
 
-         };
+        };
     }
 
-    createEventsForTowers(econ) {
+    buyTowers(econ) {
 
         for (let i = 0; i < this.towerHud.length; i++) {
             this.towerHud[i].on ('pointerdown', () => {
@@ -137,7 +137,7 @@ export default class Hud {
     }
 
     //Maybe add later into createEventsForTowers method
-    createOutline(pluginName) {
+    createTowerOutline(pluginName) {
 
         for (let i = 0; i < this.towerHud.length; i++) {
             let outlinePipeline = this.currentScene.plugins.get(pluginName).add(this.towerHud[i]);
@@ -156,7 +156,23 @@ export default class Hud {
                 // removes outline effect manually by setting to initial outline
                 outlinePipeline.setOutlineColor(0xffffff); // Set the outline color to transparent
                 outlinePipeline.setThickness(1.5); // Set the outline thickness to 0
-              });
+            });
+        }
+    }
+
+    dragTower(pluginName) {
+
+        for (let i = 0; i < this.towerHud.length; i++) {
+            let drag = this.currentScene.plugins.get(pluginName).add(this.towerHud[i]);
+
+            this.towerHud[i].on('dragstart', function(pointer, dragX, dragY){ /*...*/ });
+
+            this.towerHud[i].on('drag', function(pointer, dragX, dragY){ /*...*/ });
+            
+            this.towerHud[i].on('dragend', function(pointer, dragX, dragY, dropped){ /*...*/ });
+
+
+
         }
     }
 
