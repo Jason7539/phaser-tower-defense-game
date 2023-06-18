@@ -9,6 +9,8 @@ export default class Hud {
     towerHud;
     width;
     height;
+    towerPlacementMode;
+    
 
     constructor (scene, width, height) {
         this.currentScene = scene;
@@ -25,6 +27,9 @@ export default class Hud {
             { name: 'mage', frame: 'Mage00' },
         ];
         this.towerHud = [];
+        this.cloneImage = null;
+        this.towerPlacementMode = false;
+        
     }
 
     createPlayButton(assetName) {
@@ -90,7 +95,7 @@ export default class Hud {
                 this.towerImagesPositions[i].x,
                 this.towerImagesPositions[i].y,
                 frameData.texture.key, 
-                frameData.name
+                frameData.name,
             );
             //Gives refrence to properties to this.towerHud[i] towerImage -> So when i push to towerHud I am able to grab properties
             towerImage.Properties = towerClassInstances[i];
@@ -115,7 +120,7 @@ export default class Hud {
             towerNameText.depth = 1;
             towerNameText.setOrigin(.5, 3);
             
-            //Loads towerImage but you can just just towerImage instead of creating towerHud
+            //Loads towerImage but you can just use towerImage instead of creating towerHud
             this.towerHud.push(towerImage);
             this.towerHud[i].depth = 1
             this.towerHud[i].setVisible(true);
@@ -125,18 +130,6 @@ export default class Hud {
         };
     }
 
-    buyTowers(econ) {
-
-        for (let i = 0; i < this.towerHud.length; i++) {
-            this.towerHud[i].on ('pointerdown', () => {
-                econ.subtractMoney(this.towerHud[i].Properties.cost);
-                console.log(this.towerHud[i].Properties.cost);
-                
-            });    
-        }
-    }
-
-    //Maybe add later into createEventsForTowers method
     createTowerOutline(pluginName) {
 
         for (let i = 0; i < this.towerHud.length; i++) {
@@ -160,22 +153,47 @@ export default class Hud {
         }
     }
 
-    dragTower(pluginName) {
+    //Works but need to change some things before finalizing
+    buyTowers(econ) {
 
         for (let i = 0; i < this.towerHud.length; i++) {
-            let drag = this.currentScene.plugins.get(pluginName).add(this.towerHud[i]);
-
-            this.towerHud[i].on('dragstart', function(pointer, dragX, dragY){ /*...*/ });
-
-            this.towerHud[i].on('drag', function(pointer, dragX, dragY){ /*...*/ });
-            
-            this.towerHud[i].on('dragend', function(pointer, dragX, dragY, dropped){ /*...*/ });
-
-
-
+            this.towerHud[i].on ('pointerdown', () => {
+                econ.subtractMoney(this.towerHud[i].Properties.cost);
+                console.log(this.towerHud[i].Properties.cost);
+                
+            });    
         }
     }
 
+    startTowerPlacementMode() {
+        for (let i = 0; i < this.towerHud.length; i++) {
+          this.towerHud[i].on('pointerdown', () => {
+            this.towerPlacementMode = true;
+            //Creates texture for correct selected tower without it only the first tower will be selected
+            this.selectedTower = this.towerHud[i];
+            this.currentScene.input.mouse.requestPointerLock();
+          });
+        }
+      
+        this.currentScene.input.on('pointermove', (pointer) => {
+          if (this.towerPlacementMode && this.currentScene.input.mouse.locked && this.selectedTower) {
+            if (!this.cloneImage) {
+              // Create a copy of the tower image to move around
+              this.cloneImage = this.currentScene.add.image(pointer.x, pointer.y, this.selectedTower.texture.key);
+              this.cloneImage.setAlpha(0.5);
+              this.cloneImage.depth = 2;
+            }
+      
+            // Move the tower image with the mouse pointer
+            this.cloneImage.x += pointer.movementX;
+            this.cloneImage.y += pointer.movementY;
+      
+            // Force the sprite to stay on screen
+            this.cloneImage.x = Phaser.Math.Wrap(this.cloneImage.x, 0, this.width);
+            this.cloneImage.y = Phaser.Math.Wrap(this.cloneImage.y, 0, this.height);
+          }
+        });
+      }
 }
 
 //If adding image or text make .depth = 1
