@@ -26,6 +26,7 @@ export default class Hud {
             { name: 'splash', frame: 'Splash00' },  
             { name: 'mage', frame: 'Mage00' },
         ];
+        this.gridData = [];
         this.towerHud = [];
         this.cloneImage = null;
         this.towerPlacementMode = false;
@@ -70,6 +71,43 @@ export default class Hud {
         //tower image dimensions are w 64 h 128 so maybe cell width and height 64
     }
 
+    //Figure out way to make this instance variable so i can return to method checkIfCellIsEmpty
+    manageGridData() {
+        this.gridData = [
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        ];
+        
+    }
+
+    checkIfCellIsEmpty(gridData, x, y) {
+        console.log(this.gridData);
+        //Checks row and column amount making sure we are within limit
+        if (x >= 0 && x < gridData.length && y >= 0 && y <gridData[0].length) {
+            //Checks that the value of the cell is 0
+            if (gridData [x][y] === 0) {
+
+                return true;
+
+            }
+        }
+
+        return false;
+    }
+
     createHUD() {
         // Create a graphics object to draw the HUD background
         this.graphics = this.currentScene.add.graphics();
@@ -80,8 +118,8 @@ export default class Hud {
         // Draw a rectangle to cover the bottom of the screen
         this.rectangleHud = (new Phaser.Geom.Rectangle(0, this.height * 0.90,this.width, this.height * 0.90));
         this.graphics.fillRectShape(this.rectangleHud);
+
         this.graphics.depth = 1;
-        
     }   
     
     createTowerImage(towerClassInstances) {
@@ -131,7 +169,6 @@ export default class Hud {
     }
 
     createTowerOutline(pluginName) {
-
         for (let i = 0; i < this.towerHud.length; i++) {
             let outlinePipeline = this.currentScene.plugins.get(pluginName).add(this.towerHud[i]);
 
@@ -157,24 +194,28 @@ export default class Hud {
     buyTowers(econ) {
 
         for (let i = 0; i < this.towerHud.length; i++) {
-            this.towerHud[i].on ('pointerdown', () => {
-                econ.subtractMoney(this.towerHud[i].Properties.cost);
-                console.log(this.towerHud[i].Properties.cost);
-                
+            this.towerHud[i].on ('pointerdown', (event) => {
+                if (event.button === 0) {
+                    econ.subtractMoney(this.towerHud[i].Properties.cost);
+                    console.log(this.towerHud[i].Properties.cost);
+                }
             });    
         }
     }
 
-    startTowerPlacementMode() {
+    startAndStopTowerPlacementMode() {
         for (let i = 0; i < this.towerHud.length; i++) {
-          this.towerHud[i].on('pointerdown', () => {
-            this.towerPlacementMode = true;
-            //Creates texture for correct selected tower without it only the first tower will be selected
-            this.selectedTower = this.towerHud[i];
-            this.currentScene.input.mouse.requestPointerLock();
-          });
+            //Activates towerPlacementMode activating cursor lock
+            this.towerHud[i].on('pointerdown', (event) => {
+                if (event.button === 0) { 
+                    this.towerPlacementMode = true;
+                    this.selectedTower = this.towerHud[i];
+                    this.currentScene.input.mouse.requestPointerLock();
+                }
+            });
         }
-      
+        
+        //Creates image that moves with cursor bc of PointerLock
         this.currentScene.input.on('pointermove', (pointer) => {
           if (this.towerPlacementMode && this.currentScene.input.mouse.locked && this.selectedTower) {
             if (!this.cloneImage) {
@@ -184,17 +225,34 @@ export default class Hud {
               this.cloneImage.depth = 2;
             }
       
-            // Move the tower image with the mouse pointer
-            this.cloneImage.x += pointer.movementX;
-            this.cloneImage.y += pointer.movementY;
+            let pointerMovementSpeed = 0.7;
+            // Move the tower image with the mouse pointer 
+            this.cloneImage.x += pointer.movementX * pointerMovementSpeed;
+            this.cloneImage.y += pointer.movementY * pointerMovementSpeed;
       
             // Force the sprite to stay on screen
             this.cloneImage.x = Phaser.Math.Wrap(this.cloneImage.x, 0, this.width);
             this.cloneImage.y = Phaser.Math.Wrap(this.cloneImage.y, 0, this.height);
           }
         });
-      }
+
+        //Cancel tower placement mode and destroy and null clone
+        this.currentScene.input.keyboard.on('keydown-Q', (event) => { 
+            if (this.towerPlacementMode === true && this.currentScene.input.mouse.locked)  { 
+              this.towerPlacementMode = false;
+              this.currentScene.input.mouse.releasePointerLock();
+                if (this.cloneImage) {
+                    this.cloneImage.destroy();
+                    this.cloneImage = null;
+                    console.log(this.cloneImage);
+                }
+            }
+        });     
+    }
+
+
 }
 
 //If adding image or text make .depth = 1
 //Note to fix mage tower go into asperite sprite->canvas cut to 128 and move layer 1 then redo json files
+

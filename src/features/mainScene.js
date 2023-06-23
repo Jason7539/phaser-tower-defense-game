@@ -6,7 +6,7 @@ import Hud from "./Hud.js";
 import Tower from "./tower.js";
 
 let width = 1024;
-let height = 900;
+let height = 896;
 
 let config = {
   width,
@@ -20,7 +20,6 @@ let game = new Phaser.Game(config);
 
 function preload() {
   this.load.plugin('rexoutlinepipelineplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexoutlinepipelineplugin.min.js', true);
-  //this.load.plugin('rexdragplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexdragplugin.min.js', true);
   this.load.tilemapTiledJSON("map", "map01.json");
   this.load.image("tiles", "Grass_Tileset.png");
   this.load.image("play_button", "play_button.png");
@@ -59,8 +58,9 @@ function create() {
   bottomHud.createHUD();
   bottomHud.createTowerImage(towerClassInstances);
   bottomHud.createTowerOutline('rexoutlinepipelineplugin');
-  bottomHud.buyTowers(econ);
-  bottomHud.startTowerPlacementMode();
+  //bottomHud.buyTowers(econ);
+  bottomHud.startAndStopTowerPlacementMode();
+  bottomHud.checkIfCellIsEmpty();
   
   
   
