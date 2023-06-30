@@ -26,7 +26,7 @@ export default class Hud {
             { name: 'splash', frame: 'Splash00' },  
             { name: 'mage', frame: 'Mage00' },
         ];
-        this.gridData = [];
+        this.gridData = this.manageGridData();
         this.towerHud = [];
         this.cloneImage = null;
         this.towerPlacementMode = false;
@@ -74,38 +74,24 @@ export default class Hud {
     //Figure out way to make this instance variable so i can return to method checkIfCellIsEmpty
     manageGridData() {
         this.gridData = [
-            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,],
+            [-1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1],
+            [-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1],
+            [-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1],
+            [-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1],
+            [-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1],
+            [-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1],
+            [-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1],
+            [-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1],
+            [-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1],
+            [-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1],
+            [-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1],
+            [-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1],
+            [-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1],
+            [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,],
         ];
         
-    }
-
-    checkIfCellIsEmpty(gridData, x, y) {
-        console.log(this.gridData);
-        //Checks row and column amount making sure we are within limit
-        if (x >= 0 && x < gridData.length && y >= 0 && y <gridData[0].length) {
-            //Checks that the value of the cell is 0
-            if (gridData [x][y] === 0) {
-
-                return true;
-
-            }
-        }
-
-        return false;
+        return this.gridData;
     }
 
     createHUD() {
@@ -138,6 +124,7 @@ export default class Hud {
             //Gives refrence to properties to this.towerHud[i] towerImage -> So when i push to towerHud I am able to grab properties
             towerImage.Properties = towerClassInstances[i];
 
+            //Can maybe add both towerName and goldCost to nother method
             //Add goldcost to image
             let goldCostText = this.currentScene.add.text( 
                 this.towerImagesPositions[i].x,
@@ -145,7 +132,7 @@ export default class Hud {
                 towerClassInstances[i].cost, 
                 {fontSize: '16px', fill: '#00ff00'}
             );
-            goldCostText.depth = 1;
+            goldCostText.depth = 2;
             goldCostText.setOrigin(-1.25,-1.5);
             
             //Add tower name to image
@@ -155,12 +142,12 @@ export default class Hud {
                 towerClassInstances[i].name,
                 {fontSize: '16px', fill: '#00ff00'}
             );
-            towerNameText.depth = 1;
+            towerNameText.depth = 2;
             towerNameText.setOrigin(.5, 3);
             
             //Loads towerImage but you can just use towerImage instead of creating towerHud
             this.towerHud.push(towerImage);
-            this.towerHud[i].depth = 1
+            this.towerHud[i].depth = 2;
             this.towerHud[i].setVisible(true);
             this.towerHud[i].setScale(0.60);
             this.towerHud[i].setInteractive();
@@ -174,7 +161,7 @@ export default class Hud {
 
             // Set initial outline
             outlinePipeline.setOutlineColor(0xffffff); // Set the outline color to transparent
-            outlinePipeline.setThickness(1.5); // Set the outline thickness to 
+            outlinePipeline.setThickness(1.5); // Set the outline thickness 
 
             this.towerHud[i].on ('pointerover', () => {
                 // Add red outline effect
@@ -184,8 +171,8 @@ export default class Hud {
 
             this.towerHud[i].on('pointerout', () => {
                 // removes outline effect manually by setting to initial outline
-                outlinePipeline.setOutlineColor(0xffffff); // Set the outline color to transparent
-                outlinePipeline.setThickness(1.5); // Set the outline thickness to 0
+                outlinePipeline.setOutlineColor(0xffffff);
+                outlinePipeline.setThickness(1.5);
             });
         }
     }
@@ -203,15 +190,17 @@ export default class Hud {
         }
     }
 
-    startAndStopTowerPlacementMode() {
+    startPlacementMode() {
         for (let i = 0; i < this.towerHud.length; i++) {
             //Activates towerPlacementMode activating cursor lock
             this.towerHud[i].on('pointerdown', (event) => {
                 if (event.button === 0) { 
+
                     this.towerPlacementMode = true;
-                    this.selectedTower = this.towerHud[i];
+                    this.selectedTower = this.towerHud[i]; //If u dont make this variable next scope has problem with cloneImage
                     this.currentScene.input.mouse.requestPointerLock();
-                }
+
+                } 
             });
         }
         
@@ -223,6 +212,7 @@ export default class Hud {
               this.cloneImage = this.currentScene.add.image(pointer.x, pointer.y, this.selectedTower.texture.key);
               this.cloneImage.setAlpha(0.5);
               this.cloneImage.depth = 2;
+              this.cloneImage.setScale(0.55);
             }
       
             let pointerMovementSpeed = 0.7;
@@ -236,23 +226,62 @@ export default class Hud {
           }
         });
 
+
+        // Place tower maybe make into its own method
+        this.currentScene.input.on('pointerdown', () => {
+            if (this.towerPlacementMode && this.currentScene.input.mouse.locked && this.cloneImage) {
+                let row = Math.floor(this.cloneImage.x / 64);
+                let col = Math.floor(this.cloneImage.y / 64);
+                
+                
+
+                let gridSnapX = row * 64 + 64 / 2;
+                let gridSnapY = col * 64 + 24; //24 is y location
+                
+                if (this.checkIfCellIsEmpty(row, col)) {
+                    let towerSprite = this.currentScene.add.sprite(gridSnapX, gridSnapY, this.selectedTower.texture.key);
+                    towerSprite.depth = 1;
+                    towerSprite.setScale(0.55);
+                    this.gridData[row][col] = 1;
+                }
+            }
+        });
+    }
+
+    // placeTower() {
+
+    // }
+
+    stopPlacementMode()  {
         //Cancel tower placement mode and destroy and null clone
-        this.currentScene.input.keyboard.on('keydown-Q', (event) => { 
+        this.currentScene.input.keyboard.on('keydown-Q', () => { 
             if (this.towerPlacementMode === true && this.currentScene.input.mouse.locked)  { 
               this.towerPlacementMode = false;
               this.currentScene.input.mouse.releasePointerLock();
                 if (this.cloneImage) {
                     this.cloneImage.destroy();
                     this.cloneImage = null;
+                    // Can remove
                     console.log(this.cloneImage);
                 }
             }
-        });     
+        });      
     }
 
+    //Maybe rename canPlaceTurret
+    checkIfCellIsEmpty(row,col) {
+        let cellValue = this.gridData[row][col];
+        return cellValue === 0;
+        
+    }    
 
 }
 
 //If adding image or text make .depth = 1
 //Note to fix mage tower go into asperite sprite->canvas cut to 128 and move layer 1 then redo json files
 
+//Things to add
+    //Some type of confirm before placing turret
+    //Green tint or outline for area you can place tower or could be white outline of 64x64 cell
+    //.setTint(0x00FF00)
+    

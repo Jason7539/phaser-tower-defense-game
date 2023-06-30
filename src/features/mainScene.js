@@ -59,11 +59,10 @@ function create() {
   bottomHud.createTowerImage(towerClassInstances);
   bottomHud.createTowerOutline('rexoutlinepipelineplugin');
   //bottomHud.buyTowers(econ);
-  bottomHud.startAndStopTowerPlacementMode();
-  bottomHud.checkIfCellIsEmpty();
-  
-  
-  
+
+  bottomHud.startPlacementMode();
+  bottomHud.stopPlacementMode();
+  //bottomHud.placeTurret();
 
 
   //Background of game
