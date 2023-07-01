@@ -5,7 +5,7 @@ import Enemy from "./EnemyV2.js";
 import Hud from "./Hud.js";
 import Tower from "./tower.js";
 
-let width = 1024;
+let width = 960;
 let height = 896;
 
 let config = {
@@ -20,7 +20,7 @@ let game = new Phaser.Game(config);
 
 function preload() {
   this.load.plugin('rexoutlinepipelineplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexoutlinepipelineplugin.min.js', true);
-  this.load.tilemapTiledJSON("map", "map01.json");
+  this.load.tilemapTiledJSON("map", "mapV2.json");
   this.load.image("tiles", "Grass_Tileset.png");
   this.load.image("play_button", "play_button.png");
   this.load.image("gold", "gold.png");
@@ -58,17 +58,20 @@ function create() {
   bottomHud.createHUD();
   bottomHud.createTowerImage(towerClassInstances);
   bottomHud.createTowerOutline('rexoutlinepipelineplugin');
+ 
   //bottomHud.buyTowers(econ);
+  //bottomHud.sellTowers(econ);
 
   bottomHud.startPlacementMode();
   bottomHud.stopPlacementMode();
-  //bottomHud.placeTurret();
+  bottomHud.placeTower();
 
 
   //Background of game
   let map = this.make.tilemap({ key: "map" });
   let tileset = map.addTilesetImage("Grass_Tileset", "tiles");
-  let layer = map.createLayer("Background", tileset);
+  let floor = map.createLayer("Background", tileset);
+  let rockBorder = map.createLayer("Collision Layer", tileset);
 
   //Object layers in tiled called Start and End
   let startPointLayer = map.getObjectLayer("Start");

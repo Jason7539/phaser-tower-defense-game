@@ -19,7 +19,7 @@ export default class Hud {
         this.towerImagesPositions = [
             { x: width * 0.10, y: height * 0.95 },
             { x: width * 0.20, y: height * 0.95 },
-            { x: width * 0.30, y: height * 0.9285 },
+            { x: width * 0.30, y: height * 0.95 },
         ];
         this.towerFrames = [  
             { name: 'arrow', frame: 'Arrow00' },  
@@ -52,16 +52,16 @@ export default class Hud {
         fill: "#000",
         });
 
-        levelText.setDepth(1);
+        levelText.setDepth(2);
     }
 
     createLivesText() {
-        let livesText = this.currentScene.add.text(812, 15, "Lives:50", {
+        let livesText = this.currentScene.add.text(800, 15, "Lives:50", {
         fontSize: "32px",
         fill: "#000",
         });
 
-        livesText.setDepth(1);
+        livesText.setDepth(2);
     }
 
     createGrid() {
@@ -75,20 +75,20 @@ export default class Hud {
     manageGridData() {
         this.gridData = [
             [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,],
-            [-1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1],
-            [-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1],
-            [-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1],
-            [-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1],
-            [-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1],
-            [-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1],
-            [-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1],
-            [-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1],
-            [-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1],
-            [-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1],
-            [-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1],
-            [-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1],
-            [-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1],
-            [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,],
+            [-1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1],
+            [-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1],
+            [-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1],
+            [-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1],
+            [-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1],
+            [-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1],
+            [-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1],
+            [-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1],
+            [-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1],
+            [-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1],
+            [-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1],
+            [-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1],
+            [-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1],
+            [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
         ];
         
         return this.gridData;
@@ -177,14 +177,24 @@ export default class Hud {
         }
     }
 
-    //Works but need to change some things before finalizing
+    //Works but need to change some things before finalizing make it happen when we place tower
     buyTowers(econ) {
-
         for (let i = 0; i < this.towerHud.length; i++) {
             this.towerHud[i].on ('pointerdown', (event) => {
                 if (event.button === 0) {
                     econ.subtractMoney(this.towerHud[i].Properties.cost);
                     console.log(this.towerHud[i].Properties.cost);
+                }
+            });    
+        }
+    }
+
+    //Still need to add more logic for selling tower
+    sellTowers(econ) {
+        for (let i = 0; i < this.towerHud.length; i++) {
+            this.towerHud[i].on ('pointerdown', (event) => {
+                if (event.button === 0) {
+                    econ.addMoney(Math.floor(this.towerHud[i].Properties.cost * 0.75));
                 }
             });    
         }
@@ -207,34 +217,32 @@ export default class Hud {
         //Creates image that moves with cursor bc of PointerLock
         this.currentScene.input.on('pointermove', (pointer) => {
           if (this.towerPlacementMode && this.currentScene.input.mouse.locked && this.selectedTower) {
-            if (!this.cloneImage) {
-              // Create a copy of the tower image to move around
-              this.cloneImage = this.currentScene.add.image(pointer.x, pointer.y, this.selectedTower.texture.key);
-              this.cloneImage.setAlpha(0.5);
-              this.cloneImage.depth = 2;
-              this.cloneImage.setScale(0.55);
+                if (!this.cloneImage) {
+                    // Create a copy of the tower image to move around
+                    this.cloneImage = this.currentScene.add.image(pointer.x, pointer.y, this.selectedTower.texture.key);
+                    this.cloneImage.setAlpha(0.5);
+                    this.cloneImage.depth = 2;
+                    this.cloneImage.setScale(0.55);
+                }
+      
+                let pointerMovementSpeed = 0.7;
+                // Move the tower image with the mouse pointer 
+                this.cloneImage.x += pointer.movementX * pointerMovementSpeed;
+                this.cloneImage.y += pointer.movementY * pointerMovementSpeed;
+        
+                // Force the sprite to stay on screen
+                this.cloneImage.x = Phaser.Math.Wrap(this.cloneImage.x, 0, this.width);
+                this.cloneImage.y = Phaser.Math.Wrap(this.cloneImage.y, 0, this.height);
             }
-      
-            let pointerMovementSpeed = 0.7;
-            // Move the tower image with the mouse pointer 
-            this.cloneImage.x += pointer.movementX * pointerMovementSpeed;
-            this.cloneImage.y += pointer.movementY * pointerMovementSpeed;
-      
-            // Force the sprite to stay on screen
-            this.cloneImage.x = Phaser.Math.Wrap(this.cloneImage.x, 0, this.width);
-            this.cloneImage.y = Phaser.Math.Wrap(this.cloneImage.y, 0, this.height);
-          }
         });
+    }
 
-
-        // Place tower maybe make into its own method
+    placeTower() {
         this.currentScene.input.on('pointerdown', () => {
             if (this.towerPlacementMode && this.currentScene.input.mouse.locked && this.cloneImage) {
                 let row = Math.floor(this.cloneImage.x / 64);
                 let col = Math.floor(this.cloneImage.y / 64);
                 
-                
-
                 let gridSnapX = row * 64 + 64 / 2;
                 let gridSnapY = col * 64 + 24; //24 is y location
                 
@@ -247,10 +255,6 @@ export default class Hud {
             }
         });
     }
-
-    // placeTower() {
-
-    // }
 
     stopPlacementMode()  {
         //Cancel tower placement mode and destroy and null clone
@@ -271,6 +275,7 @@ export default class Hud {
     //Maybe rename canPlaceTurret
     checkIfCellIsEmpty(row,col) {
         let cellValue = this.gridData[row][col];
+        console.log(cellValue);
         return cellValue === 0;
         
     }    

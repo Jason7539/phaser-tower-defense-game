@@ -14,10 +14,6 @@ export default class Tower {
 
     //Possible methods
 
-    sell(){
-        return this.cost * 0.75;
-    }
-
     attack(enemy) {
         const distance = this.getDistancetoTarget(enemy);
         if (distance <= this.range) {
