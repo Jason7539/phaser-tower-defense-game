@@ -237,6 +237,7 @@ export default class Hud {
         });
     }
 
+    //Maybe add collision to method
     placeTower() {
         this.currentScene.input.on('pointerdown', () => {
             if (this.towerPlacementMode && this.currentScene.input.mouse.locked && this.cloneImage) {
@@ -251,6 +252,7 @@ export default class Hud {
                     towerSprite.depth = 1;
                     towerSprite.setScale(0.55);
                     this.gridData[row][col] = 1;
+                    console.log(this.selectedTower.Properties.name);
                 }
             }
         });
