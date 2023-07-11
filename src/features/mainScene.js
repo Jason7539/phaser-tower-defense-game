@@ -4,6 +4,7 @@ import Economy from "./economy.js";
 import Enemy from "./EnemyV2.js";
 import Hud from "./Hud.js";
 import Tower from "./tower.js";
+import Projectile from "./Projectile.js";
 
 let width = 960;
 let height = 896;
@@ -49,6 +50,7 @@ function create() {
   let mage = new Tower(10, 50, 5, 5, 50,);
   mage.name = 'Mage';
   let towerClassInstances = [ arrow, siege, mage ]; 
+  console.log(arrow.name);
 
   //Hud class methods
   startbutton.createPlayButton("play_button");
@@ -65,6 +67,7 @@ function create() {
   bottomHud.startPlacementMode();
   bottomHud.stopPlacementMode();
   bottomHud.placeTower();
+  //console.log(towerSprite);
 
 
   //Background of game

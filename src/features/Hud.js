@@ -253,6 +253,8 @@ export default class Hud {
                     towerSprite.setScale(0.55);
                     this.gridData[row][col] = 1;
                     console.log(this.selectedTower.Properties.name);
+                    console.log(towerSprite.x);
+                    
                 }
             }
         });

@@ -1,5 +1,3 @@
-
-
 export default class Tower {
     constructor(damage, range, attackSpeed, cost, upgradeCost, x, y) {
         this.damage = damage;
